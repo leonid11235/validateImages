@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Custom App Images</title>
+  <title>Custom App Image Validator</title>
   <meta name="description" content="The HTML5 Herald">
   <meta name="author" content="SitePoint">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,7 +33,8 @@
 
 <body>
   <div class="container">
-    <h1>Custom App Media - <span class="grey-text text-darken-1">Android</span></h1>
+    <img src="logo-BuildingLink-CMYK-Black-Red-taglineUnder-forLetterhead.png" width="200px" alt="BuildingLink Logo">
+    <h2>Custom App Media Validator - <span class="grey-text text-darken-1">Android</span></h2>
     <h5>1. App Icon</h5>
     <div class="row">
       <div class="col s10">       
@@ -43,7 +44,7 @@
             <input type="file">
           </div>
           <div class="file-path-wrapper">
-            <input class="file-path validate" id="app-icon" type="text" onchange="selectImg()">
+            <input class="file-path validate" id="app-icon" name="appicon" type="text" onchange="selectImg()">
           </div>
         </div>
       </div>
@@ -125,6 +126,42 @@
       </div>
     </div>
 
+    <p>XXHDPI = 960x1440px</p>
+    <div class="row">
+      <div class="col s10">
+        <div class="file-field input-field">
+            <div class="btn">
+              <span>File</span>
+              <input type="file">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text" placeholder="" onchange="">
+            </div>
+          </div>
+      </div>
+      <div class="col s2">
+        <img src="Blank_Page-512.png" class="thumbnail" alt="Image preview...">
+      </div>
+    </div>
+
+    <p>XXXHDPI = 1280x1920px</p>
+    <div class="row">
+      <div class="col s10">
+        <div class="file-field input-field">
+            <div class="btn">
+              <span>File</span>
+              <input type="file">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text" placeholder="" onchange="">
+            </div>
+          </div>
+      </div>
+      <div class="col s2">
+        <img src="Blank_Page-512.png" class="thumbnail" alt="Image preview...">
+      </div>
+    </div>
+
     <h5>3. Login screentop logo 1x9 SVG image</h5>  
     <div class="row">
       <div class="col s10">
@@ -149,10 +186,58 @@
         <textarea id="textarea2" class="materialize-textarea" data-length="120"></textarea>
         <label for="textarea2">App name</label>
       </div>
+      <div class="input-field col s12">
+        <textarea id="textarea2" class="materialize-textarea" data-length="120"></textarea>
+        <label for="textarea2">Account for screenshots (normally support provides)</label>
+      </div>
+      <div class="input-field col s12">
+          <textarea id="textarea2" class="materialize-textarea" data-length="120"></textarea>
+          <label for="textarea2">App Description For Google Play</label>
+      </div>
+      <div class="input-field col s12">
+          <textarea id="textarea2" class="materialize-textarea" data-length="120"></textarea>
+          <label for="textarea2">Short Description for Google Play</label>
+      </div>
     </div>
 
-    <p>Dropbox</p>
-    <a href="https://dl.dropboxusercontent.com/s/deroi5nwm6u7gdf/advice.png" class="dropbox-saver" id="dropbox-saver-id">Dropbox</a>
+    <p>Feature Graphic - 1024x500px JPG or 24-bit PNG (no-alpha)</p>
+    <div class="row">
+      <div class="col s10">
+        <div class="file-field input-field">
+            <div class="btn">
+              <span>File</span>
+              <input type="file">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text" placeholder="" onchange="">
+            </div>
+          </div>
+      </div>
+      <div class="col s2">
+        <img src="Blank_Page-512.png" class="thumbnail" alt="Image preview...">
+      </div>
+    </div>
+
+    <p>Hi-res icon - 512x512px 32bit PNG (with alpha)</p>
+    <div class="row">
+      <div class="col s10">
+        <div class="file-field input-field">
+            <div class="btn">
+              <span>File</span>
+              <input type="file">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text" placeholder="" onchange="">
+            </div>
+          </div>
+      </div>
+      <div class="col s2">
+        <img src="Blank_Page-512.png" class="thumbnail" alt="Image preview...">
+      </div>
+    </div>
+
+      <p>Dropbox</p>
+      <a href="https://dl.dropboxusercontent.com/s/deroi5nwm6u7gdf/advice.png" class="dropbox-saver" id="dropbox-saver-id">Dropbox</a>
 
       <!--Add buttons to initiate auth sequence and sign out-->
       <h5>Google Drive</h5>
@@ -163,13 +248,14 @@
   </div>
 
 <script type="text/javascript" src="drive.js"></script>
+<script type="text/javascript" src="dropbox.js"></script>
 <script async defer src="https://apis.google.com/js/api.js"
   onload="this.onload=function(){};handleClientLoad()"
   onreadystatechange="if (this.readyState === 'complete') this.onload()">
 </script>
 <script>
 // Author: Leonid Uvarov
-// NOTES: Create function for validateDimensions
+// NOTES: Create function for validateDimensions, separate firebase .js file?
 
 // Global variables
 var urlArray = [];
@@ -192,7 +278,7 @@ firebase.initializeApp(firebaseConfig);
 function selectImg() {
   var preview = document.querySelector('img'); //selects the query named img
   var file    = document.querySelector('input[type=file]').files[0]; //sames as here
-  alert(file.type);
+
   var reader  = new FileReader();
   reader.onload = function (e) {
 
@@ -280,36 +366,23 @@ function uploadToCloud(image, name){
   )
 }
 
-// Create a dropbox saver button with an array of URL's
-function createDropboxBtn() {
-  var options = {
-    files: [
-      // You can specify up to 100 files.
-    ],
+// Pass the function aparameters to check against, return false if fails
+function validateImgSize() {
 
-    // Success is called once all files have been successfully added to the user's
-    // Dropbox, although they may not have synced to the user's devices yet.
-    success: function () {
-        // Indicate to the user that the files have been saved.
-        alert("Success! Files saved to your Dropbox.");
-    },
+}
 
-    // Progress is called periodically to update the application on the progress
-    // of the user's downloads. The value passed to this callback is a float
-    // between 0 and 1. The progress callback is guaranteed to be called at least
-    // once with the value 1.
-    progress: function (progress) {},
-
-    // Cancel is called if the user presses the Cancel button or closes the Saver.
-    cancel: function () {},
-
-    // Error is called in the event of an unexpected response from the server
-    // hosting the files, such as not being able to find a file. This callback is
-    // also called if there is an error on Dropbox or if the user is over quota.
-    error: function (errorMessage) {}
-  };
-  var button = Dropbox.createSaveButton(options);
-  document.getElementById("container").appendChild(button);
+// Function to validate file type
+function validateImgFile(fileId){
+    var fileInput = document.getElementById(fileId);
+    var filePath = fileInput.value;
+    var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+    if(!allowedExtensions.exec(filePath)){
+        alert('Please upload file having extensions .jpeg/.jpg/.png/.gif only.');
+        fileInput.value = '';
+        return false;
+    }else{
+      return true;
+    }
 }
 
 // Temporary func: set the URL for dropbox button (image to save)
