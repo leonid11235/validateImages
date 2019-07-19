@@ -1,0 +1,323 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Custom App Images</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-storage.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <!-- Dropbox api -->
+  <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="tlvf8xcd30wdyaf"></script>
+  <!-- Jquery -->
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+  integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+  crossorigin="anonymous"></script>
+  <style>
+    .thumbnail {
+      width: 50px;
+      margin-left: 10px;
+    }
+    .row .col {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Custom App Media - <span class="grey-text text-darken-1">Android</span></h1>
+    <h5>1. App Icon</h5>
+    <div class="row">
+      <div class="col s10">       
+        <div class="file-field input-field">
+          <div class="btn">
+            <span>File</span>
+            <input type="file">
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path validate" id="app-icon" type="text" onchange="selectImg()">
+          </div>
+        </div>
+      </div>
+      <div class="col s2">
+        <img src="Blank_Page-512.png" class="thumbnail" alt="Image preview...">
+      </div>
+    </div>
+
+    <h5>2. Splash screen 9-patch image with the following resolution</h5>
+    <p>Portrait mode</p>
+    <div class="row">
+      <div class="col s10">
+        <div class="file-field input-field">
+            <div class="btn">
+              <span>File</span>
+              <input type="file">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text" placeholder="" onchange="">
+            </div>
+          </div>
+      </div>
+      <div class="col s2">
+        <img src="Blank_Page-512.png" class="thumbnail" alt="Image preview...">
+      </div>
+    </div>
+
+    <p>MDPI = 320x480px</p>
+    <div class="row">
+      <div class="col s10">
+        <div class="file-field input-field">
+            <div class="btn">
+              <span>File</span>
+              <input type="file">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text" placeholder="" onchange="">
+            </div>
+          </div>
+      </div>
+      <div class="col s2">
+        <img src="Blank_Page-512.png" class="thumbnail" alt="Image preview...">
+      </div>
+    </div>
+
+    <p>LDPI = 240x360px * HDPI = 480x720px</p>
+    <div class="row">
+      <div class="col s10">
+        <div class="file-field input-field">
+            <div class="btn">
+              <span>File</span>
+              <input type="file">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text" placeholder="" onchange="">
+            </div>
+          </div>
+      </div>
+      <div class="col s2">
+        <img src="Blank_Page-512.png" class="thumbnail" alt="Image preview...">
+      </div>
+    </div>
+
+    <p>XHDPI = 640x960px</p>
+    <div class="row">
+      <div class="col s10">
+        <div class="file-field input-field">
+            <div class="btn">
+              <span>File</span>
+              <input type="file">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text" placeholder="" onchange="">
+            </div>
+          </div>
+      </div>
+      <div class="col s2">
+        <img src="Blank_Page-512.png" class="thumbnail" alt="Image preview...">
+      </div>
+    </div>
+
+    <h5>3. Login screentop logo 1x9 SVG image</h5>  
+    <div class="row">
+      <div class="col s10">
+        <div class="file-field input-field">
+            <div class="btn">
+              <span>File</span>
+              <input type="file">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text" placeholder="" onchange="">
+            </div>
+          </div>
+      </div>
+      <div class="col s2">
+        <img src="Blank_Page-512.png" class="thumbnail" alt="Image preview...">
+      </div>
+    </div>
+
+    <h5>4. Google play metadata</h5>
+    <div class="row">
+      <div class="input-field col s12">
+        <textarea id="textarea2" class="materialize-textarea" data-length="120"></textarea>
+        <label for="textarea2">App name</label>
+      </div>
+    </div>
+
+    <p>Dropbox</p>
+    <a href="https://dl.dropboxusercontent.com/s/deroi5nwm6u7gdf/advice.png" class="dropbox-saver" id="dropbox-saver-id">Dropbox</a>
+
+      <!--Add buttons to initiate auth sequence and sign out-->
+      <h5>Google Drive</h5>
+      <button id="authorize_button" class="btn" style="display: none;">Authorize</button>
+      <button id="signout_button" class="btn" style="display: none;">Sign Out</button>
+      <pre id="content" style="white-space: pre-wrap;"></pre>
+    <div id="container"></div>
+  </div>
+
+<script type="text/javascript" src="drive.js"></script>
+<script async defer src="https://apis.google.com/js/api.js"
+  onload="this.onload=function(){};handleClientLoad()"
+  onreadystatechange="if (this.readyState === 'complete') this.onload()">
+</script>
+<script>
+// Author: Leonid Uvarov
+// NOTES: Create function for validateDimensions
+
+// Global variables
+var urlArray = [];
+var dropboxUrlTest = "";
+
+// FIREBASE STORAGE
+// Your web app's Firebase configuration
+var firebaseConfig = {
+apiKey: "AIzaSyBLfWdcEoARKEdbvya0evqMHRBPtzAk1sc",
+authDomain: "image-upload-46ec6.firebaseapp.com",
+databaseURL: "https://image-upload-46ec6.firebaseio.com",
+projectId: "image-upload-46ec6",
+storageBucket: "image-upload-46ec6.appspot.com",
+messagingSenderId: "820672852461",
+appId: "1:820672852461:web:bc97989838fc9702"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+function selectImg() {
+  var preview = document.querySelector('img'); //selects the query named img
+  var file    = document.querySelector('input[type=file]').files[0]; //sames as here
+  alert(file.type);
+  var reader  = new FileReader();
+  reader.onload = function (e) {
+
+    //Initiate the JavaScript Image object.
+    var image = new Image();
+    //Set the Base64 string return from FileReader as source.
+    image.src = e.target.result;
+
+    //Validate the File Height and Width.
+    image.onload = function () {
+      var height = this.height;
+      var width = this.width;
+      if (height > 500 || width > 500) {
+          alert("Height and Width must not exceed 100px.");
+          
+          return false;
+      }
+      alert("Uploaded image has valid Height and Width.");
+      uploadToCloud(file, "appicon.png");
+      preview.src = reader.result;
+
+      // Push url to array
+      var storage = firebase.storage();
+      var pathReference = storage.ref('images/' + 'appicon.png');
+      
+      pathReference.getDownloadURL().then(function(url) {
+        urlArray.push(url);
+        dropboxUrlTest = url;
+        setDBUrl(dropboxUrlTest);
+        console.log(urlArray[0]);
+        
+      }).catch(function(error) {
+        switch (error.code) {
+        case 'storage/object-not-found':
+          // File doesn't exist
+          break;
+
+        case 'storage/unauthorized':
+          // User doesn't have permission to access the object
+          break;
+
+        case 'storage/canceled':
+          // User canceled the upload
+          break;
+        case 'storage/unknown':
+          // Unknown error occurred, inspect the server response
+        break;
+        }
+      });
+
+      return true;
+    };
+  }
+
+  if (file) {
+      reader.readAsDataURL(file); //reads the data as a URL
+  } else {
+      preview.src = "";
+  }
+}
+
+function selectImgMulti() {
+
+}
+
+function uploadToCloud(image, name){
+  // Create a storage reference
+  var storageRef = firebase.storage().ref('images/' + name);
+  // Convert to blob
+  //var blob = new Blob([src], { type: "image/jpeg" });
+  // Upload file - 
+  var task = storageRef.put(image);
+
+  task.on('state_changed', 
+    function progress(snapshot) {
+
+    },
+    function error(err) {
+
+    },
+
+    function complete() {
+
+    }
+  )
+}
+
+// Create a dropbox saver button with an array of URL's
+function createDropboxBtn() {
+  var options = {
+    files: [
+      // You can specify up to 100 files.
+    ],
+
+    // Success is called once all files have been successfully added to the user's
+    // Dropbox, although they may not have synced to the user's devices yet.
+    success: function () {
+        // Indicate to the user that the files have been saved.
+        alert("Success! Files saved to your Dropbox.");
+    },
+
+    // Progress is called periodically to update the application on the progress
+    // of the user's downloads. The value passed to this callback is a float
+    // between 0 and 1. The progress callback is guaranteed to be called at least
+    // once with the value 1.
+    progress: function (progress) {},
+
+    // Cancel is called if the user presses the Cancel button or closes the Saver.
+    cancel: function () {},
+
+    // Error is called in the event of an unexpected response from the server
+    // hosting the files, such as not being able to find a file. This callback is
+    // also called if there is an error on Dropbox or if the user is over quota.
+    error: function (errorMessage) {}
+  };
+  var button = Dropbox.createSaveButton(options);
+  document.getElementById("container").appendChild(button);
+}
+
+// Temporary func: set the URL for dropbox button (image to save)
+function setDBUrl(url) {
+  $('#dropbox-saver-id').attr('href', url);
+}
+
+//dropbox();
+</script>
+</body>
+</html>
