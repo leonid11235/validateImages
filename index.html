@@ -38,18 +38,18 @@
     <h5>1. App Icon</h5>
     <div class="row">
       <div class="col s10">       
-        <div class="file-field input-field">
+        <div class="file-field input-field" id="wrapper1">
           <div class="btn">
             <span>File</span>
             <input type="file">
           </div>
           <div class="file-path-wrapper">
-            <input class="file-path validate" id="app-icon" name="appicon" type="text" onchange="selectImg()">
+            <input class="file-path validate" id="app-icon" name="appicon" type="text" onchange="selectImg(event, 'app-icon-img', 'wrapper1')">
           </div>
         </div>
       </div>
       <div class="col s2">
-        <img src="Blank_Page-512.png" class="thumbnail" alt="Image preview...">
+        <img src="Blank_Page-512.png" id="app-icon-img" class="thumbnail" alt="Image preview...">
       </div>
     </div>
 
@@ -57,18 +57,18 @@
     <p>Portrait mode</p>
     <div class="row">
       <div class="col s10">
-        <div class="file-field input-field">
+        <div class="file-field input-field" id="wrapper2">
             <div class="btn">
               <span>File</span>
               <input type="file">
             </div>
             <div class="file-path-wrapper">
-              <input class="file-path validate" type="text" placeholder="" onchange="">
+              <input class="file-path validate" type="text" placeholder="" onchange="selectImg(event, 'portrait-img', 'wrapper2')">
             </div>
           </div>
       </div>
       <div class="col s2">
-        <img src="Blank_Page-512.png" class="thumbnail" alt="Image preview...">
+        <img src="Blank_Page-512.png" id="portrait-img" class="thumbnail" alt="Image preview...">
       </div>
     </div>
 
@@ -264,23 +264,26 @@ var dropboxUrlTest = "";
 // FIREBASE STORAGE
 // Your web app's Firebase configuration
 var firebaseConfig = {
-apiKey: "AIzaSyBLfWdcEoARKEdbvya0evqMHRBPtzAk1sc",
-authDomain: "image-upload-46ec6.firebaseapp.com",
-databaseURL: "https://image-upload-46ec6.firebaseio.com",
-projectId: "image-upload-46ec6",
-storageBucket: "image-upload-46ec6.appspot.com",
-messagingSenderId: "820672852461",
-appId: "1:820672852461:web:bc97989838fc9702"
+  apiKey: "AIzaSyBLfWdcEoARKEdbvya0evqMHRBPtzAk1sc",
+  authDomain: "image-upload-46ec6.firebaseapp.com",
+  databaseURL: "https://image-upload-46ec6.firebaseio.com",
+  projectId: "image-upload-46ec6",
+  storageBucket: "image-upload-46ec6.appspot.com",
+  messagingSenderId: "820672852461",
+  appId: "1:820672852461:web:bc97989838fc9702"
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-function selectImg() {
-  var preview = document.querySelector('img'); //selects the query named img
-  var file    = document.querySelector('input[type=file]').files[0]; //sames as here
+function selectImg(event, imgDomId, wrapperId) {
+  var wrapper = document.getElementById(wrapperId);
+  var preview = document.getElementById(imgDomId);//selects the query named img
+  var file    = wrapper.querySelector('input[type=file]').files[0];
 
   var reader  = new FileReader();
   reader.onload = function (e) {
+
+    //file = document.querySelector('input[type=file]').files[0]; //sames as here
 
     //Initiate the JavaScript Image object.
     var image = new Image();
@@ -347,8 +350,6 @@ function selectImgMulti() {
 function uploadToCloud(image, name){
   // Create a storage reference
   var storageRef = firebase.storage().ref('images/' + name);
-  // Convert to blob
-  //var blob = new Blob([src], { type: "image/jpeg" });
   // Upload file - 
   var task = storageRef.put(image);
 
@@ -390,7 +391,6 @@ function setDBUrl(url) {
   $('#dropbox-saver-id').attr('href', url);
 }
 
-//dropbox();
 </script>
 </body>
 </html>
