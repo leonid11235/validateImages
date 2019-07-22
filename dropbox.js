@@ -27,5 +27,5 @@ function createDropboxBtn() {
       error: function (errorMessage) {}
     };
     var button = Dropbox.createSaveButton(options);
-    document.getElementById("container").appendChild(button);
+    document.getElementById("dropbox-btn").appendChild(button);
   }

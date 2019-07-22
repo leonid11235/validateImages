@@ -28,226 +28,233 @@
       margin: 0;
       padding: 0;
     }
+    #bl-logo {
+      width: 200px;
+      margin-left: -20px;
+    }
   </style>
 </head>
 
 <body>
   <div class="container">
-    <img src="logo-BuildingLink-CMYK-Black-Red-taglineUnder-forLetterhead.png" width="200px" alt="BuildingLink Logo">
+    <img id="bl-logo" src="logo-BuildingLink-CMYK-Black-Red-taglineUnder-forLetterhead.png" alt="BuildingLink Logo">
     <h2>Custom App Media Validator - <span class="grey-text text-darken-1">Android</span></h2>
-    <h5>1. App Icon</h5>
-    <div class="row">
-      <div class="col s10">       
-        <div class="file-field input-field" id="wrapper1">
-          <div class="btn">
-            <span>File</span>
-            <input type="file">
-          </div>
-          <div class="file-path-wrapper">
-            <input class="file-path validate" id="app-icon" name="appicon" type="text" onchange="selectImg(event, 'app-icon-img', 'wrapper1')">
+    
+    <form>
+      <h5>1. App Icon</h5>
+      <div class="row">
+        <div class="col s10">       
+          <div class="file-field input-field" id="appicon">
+            <div class="btn">
+              <span>File</span>
+              <input type="file">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" id="app-icon" name="appicon" type="text" onchange="selectImg('app-icon-img', 'appicon')">
+            </div>
           </div>
         </div>
+        <div class="col s2">
+          <img src="Blank_Page-512.png" id="app-icon-img" class="thumbnail" alt="Image preview...">
+        </div>
       </div>
-      <div class="col s2">
-        <img src="Blank_Page-512.png" id="app-icon-img" class="thumbnail" alt="Image preview...">
-      </div>
-    </div>
 
-    <h5>2. Splash screen 9-patch image with the following resolution</h5>
-    <p>Portrait mode</p>
-    <div class="row">
-      <div class="col s10">
-        <div class="file-field input-field" id="wrapper2">
-            <div class="btn">
-              <span>File</span>
-              <input type="file">
+      <h5>2. Splash screen 9-patch image with the following resolution</h5>
+      <p>Portrait mode</p>
+      <div class="row">
+        <div class="col s10">
+          <div class="file-field input-field" id="portrait">
+              <div class="btn">
+                <span>File</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" placeholder="" onchange="selectImg('portrait-img', 'portrait')">
+              </div>
             </div>
-            <div class="file-path-wrapper">
-              <input class="file-path validate" type="text" placeholder="" onchange="selectImg(event, 'portrait-img', 'wrapper2')">
-            </div>
-          </div>
+        </div>
+        <div class="col s2">
+          <img src="Blank_Page-512.png" id="portrait-img" class="thumbnail" alt="Image preview...">
+        </div>
       </div>
-      <div class="col s2">
-        <img src="Blank_Page-512.png" id="portrait-img" class="thumbnail" alt="Image preview...">
-      </div>
-    </div>
 
-    <p>MDPI = 320x480px</p>
-    <div class="row">
-      <div class="col s10">
-        <div class="file-field input-field">
-            <div class="btn">
-              <span>File</span>
-              <input type="file">
+      <p>MDPI = 320x480px</p>
+      <div class="row">
+        <div class="col s10">
+          <div class="file-field input-field" id="MDPI">
+              <div class="btn">
+                <span>File</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" placeholder="" onchange="selectImg('MDPI-img', 'MDPI')">
+              </div>
             </div>
-            <div class="file-path-wrapper">
-              <input class="file-path validate" type="text" placeholder="" onchange="">
-            </div>
-          </div>
+        </div>
+        <div class="col s2">
+          <img src="Blank_Page-512.png" id="MDPI-img" class="thumbnail" alt="Image preview...">
+        </div>
       </div>
-      <div class="col s2">
-        <img src="Blank_Page-512.png" class="thumbnail" alt="Image preview...">
-      </div>
-    </div>
 
-    <p>LDPI = 240x360px * HDPI = 480x720px</p>
-    <div class="row">
-      <div class="col s10">
-        <div class="file-field input-field">
-            <div class="btn">
-              <span>File</span>
-              <input type="file">
+      <p>LDPI = 240x360px * HDPI = 480x720px</p>
+      <div class="row">
+        <div class="col s10">
+          <div class="file-field input-field" id="LDPI">
+              <div class="btn">
+                <span>File</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" id="LDPI-img" type="text" placeholder="" onchange="selectImg('LDPI-img', 'LDPI')">
+              </div>
             </div>
-            <div class="file-path-wrapper">
-              <input class="file-path validate" type="text" placeholder="" onchange="">
-            </div>
-          </div>
+        </div>
+        <div class="col s2">
+          <img src="Blank_Page-512.png" class="thumbnail" alt="Image preview...">
+        </div>
       </div>
-      <div class="col s2">
-        <img src="Blank_Page-512.png" class="thumbnail" alt="Image preview...">
-      </div>
-    </div>
 
-    <p>XHDPI = 640x960px</p>
-    <div class="row">
-      <div class="col s10">
-        <div class="file-field input-field">
-            <div class="btn">
-              <span>File</span>
-              <input type="file">
+      <p>XHDPI = 640x960px</p>
+      <div class="row">
+        <div class="col s10">
+          <div class="file-field input-field">
+              <div class="btn">
+                <span>File</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" placeholder="" onchange="">
+              </div>
             </div>
-            <div class="file-path-wrapper">
-              <input class="file-path validate" type="text" placeholder="" onchange="">
-            </div>
-          </div>
+        </div>
+        <div class="col s2">
+          <img src="Blank_Page-512.png" class="thumbnail" alt="Image preview...">
+        </div>
       </div>
-      <div class="col s2">
-        <img src="Blank_Page-512.png" class="thumbnail" alt="Image preview...">
-      </div>
-    </div>
 
-    <p>XXHDPI = 960x1440px</p>
-    <div class="row">
-      <div class="col s10">
-        <div class="file-field input-field">
-            <div class="btn">
-              <span>File</span>
-              <input type="file">
+      <p>XXHDPI = 960x1440px</p>
+      <div class="row">
+        <div class="col s10">
+          <div class="file-field input-field">
+              <div class="btn">
+                <span>File</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" placeholder="" onchange="">
+              </div>
             </div>
-            <div class="file-path-wrapper">
-              <input class="file-path validate" type="text" placeholder="" onchange="">
-            </div>
-          </div>
+        </div>
+        <div class="col s2">
+          <img src="Blank_Page-512.png" class="thumbnail" alt="Image preview...">
+        </div>
       </div>
-      <div class="col s2">
-        <img src="Blank_Page-512.png" class="thumbnail" alt="Image preview...">
-      </div>
-    </div>
 
-    <p>XXXHDPI = 1280x1920px</p>
-    <div class="row">
-      <div class="col s10">
-        <div class="file-field input-field">
-            <div class="btn">
-              <span>File</span>
-              <input type="file">
+      <p>XXXHDPI = 1280x1920px</p>
+      <div class="row">
+        <div class="col s10">
+          <div class="file-field input-field">
+              <div class="btn">
+                <span>File</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" placeholder="" onchange="">
+              </div>
             </div>
-            <div class="file-path-wrapper">
-              <input class="file-path validate" type="text" placeholder="" onchange="">
-            </div>
-          </div>
+        </div>
+        <div class="col s2">
+          <img src="Blank_Page-512.png" class="thumbnail" alt="Image preview...">
+        </div>
       </div>
-      <div class="col s2">
-        <img src="Blank_Page-512.png" class="thumbnail" alt="Image preview...">
-      </div>
-    </div>
 
-    <h5>3. Login screentop logo 1x9 SVG image</h5>  
-    <div class="row">
-      <div class="col s10">
-        <div class="file-field input-field">
-            <div class="btn">
-              <span>File</span>
-              <input type="file">
+      <h5>3. Login screentop logo 1x9 SVG image</h5>  
+      <div class="row">
+        <div class="col s10">
+          <div class="file-field input-field">
+              <div class="btn">
+                <span>File</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" placeholder="" onchange="">
+              </div>
             </div>
-            <div class="file-path-wrapper">
-              <input class="file-path validate" type="text" placeholder="" onchange="">
-            </div>
-          </div>
+        </div>
+        <div class="col s2">
+          <img src="Blank_Page-512.png" class="thumbnail" alt="Image preview...">
+        </div>
       </div>
-      <div class="col s2">
-        <img src="Blank_Page-512.png" class="thumbnail" alt="Image preview...">
-      </div>
-    </div>
 
-    <h5>4. Google play metadata</h5>
-    <div class="row">
-      <div class="input-field col s12">
-        <textarea id="textarea2" class="materialize-textarea" data-length="120"></textarea>
-        <label for="textarea2">App name</label>
-      </div>
-      <div class="input-field col s12">
-        <textarea id="textarea2" class="materialize-textarea" data-length="120"></textarea>
-        <label for="textarea2">Account for screenshots (normally support provides)</label>
-      </div>
-      <div class="input-field col s12">
+      <h5>4. Google play metadata</h5>
+      <div class="row">
+        <div class="input-field col s12">
           <textarea id="textarea2" class="materialize-textarea" data-length="120"></textarea>
-          <label for="textarea2">App Description For Google Play</label>
-      </div>
-      <div class="input-field col s12">
+          <label for="textarea2">App name</label>
+        </div>
+        <div class="input-field col s12">
           <textarea id="textarea2" class="materialize-textarea" data-length="120"></textarea>
-          <label for="textarea2">Short Description for Google Play</label>
+          <label for="textarea2">Account for screenshots (normally support provides)</label>
+        </div>
+        <div class="input-field col s12">
+            <textarea id="textarea2" class="materialize-textarea" data-length="120"></textarea>
+            <label for="textarea2">App Description For Google Play</label>
+        </div>
+        <div class="input-field col s12">
+            <textarea id="textarea2" class="materialize-textarea" data-length="120"></textarea>
+            <label for="textarea2">Short Description for Google Play</label>
+        </div>
       </div>
-    </div>
 
-    <p>Feature Graphic - 1024x500px JPG or 24-bit PNG (no-alpha)</p>
-    <div class="row">
-      <div class="col s10">
-        <div class="file-field input-field">
-            <div class="btn">
-              <span>File</span>
-              <input type="file">
+      <p>Feature Graphic - 1024x500px JPG or 24-bit PNG (no-alpha)</p>
+      <div class="row">
+        <div class="col s10">
+          <div class="file-field input-field">
+              <div class="btn">
+                <span>File</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" placeholder="" onchange="">
+              </div>
             </div>
-            <div class="file-path-wrapper">
-              <input class="file-path validate" type="text" placeholder="" onchange="">
-            </div>
-          </div>
+        </div>
+        <div class="col s2">
+          <img src="Blank_Page-512.png" class="thumbnail" alt="Image preview...">
+        </div>
       </div>
-      <div class="col s2">
-        <img src="Blank_Page-512.png" class="thumbnail" alt="Image preview...">
-      </div>
-    </div>
 
-    <p>Hi-res icon - 512x512px 32bit PNG (with alpha)</p>
-    <div class="row">
-      <div class="col s10">
-        <div class="file-field input-field">
-            <div class="btn">
-              <span>File</span>
-              <input type="file">
+      <p>Hi-res icon - 512x512px 32bit PNG (with alpha)</p>
+      <div class="row">
+        <div class="col s10">
+          <div class="file-field input-field">
+              <div class="btn">
+                <span>File</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" placeholder="" onchange="">
+              </div>
             </div>
-            <div class="file-path-wrapper">
-              <input class="file-path validate" type="text" placeholder="" onchange="">
-            </div>
-          </div>
+        </div>
+        <div class="col s2">
+          <img src="Blank_Page-512.png" class="thumbnail" alt="Image preview...">
+        </div>
       </div>
-      <div class="col s2">
-        <img src="Blank_Page-512.png" class="thumbnail" alt="Image preview...">
-      </div>
-    </div>
 
-      <p>Dropbox</p>
-      <a href="https://dl.dropboxusercontent.com/s/deroi5nwm6u7gdf/advice.png" class="dropbox-saver" id="dropbox-saver-id">Dropbox</a>
+        <p>Dropbox</p>
+        <a href="https://dl.dropboxusercontent.com/s/deroi5nwm6u7gdf/advice.png" class="dropbox-saver" id="dropbox-saver-id">Dropbox</a>
 
-      <!--Add buttons to initiate auth sequence and sign out-->
-      <h5>Google Drive</h5>
-      <button id="authorize_button" class="btn" style="display: none;">Authorize</button>
-      <button id="signout_button" class="btn" style="display: none;">Sign Out</button>
-      <pre id="content" style="white-space: pre-wrap;"></pre>
-    <div id="container"></div>
+        <!--Add buttons to initiate auth sequence and sign out-->
+        <!-- <h5>Google Drive</h5>
+        <button id="authorize_button" class="btn">Authorize</button>
+        <button id="signout_button" class="btn">Sign Out</button>
+        <pre id="content" style="white-space: pre-wrap;"></pre> -->
+      <div id="dropbox-btn"></div>
+  </form>
   </div>
 
-<script type="text/javascript" src="drive.js"></script>
+<!-- <script type="text/javascript" src="drive.js"></script> -->
 <script type="text/javascript" src="dropbox.js"></script>
 <script async defer src="https://apis.google.com/js/api.js"
   onload="this.onload=function(){};handleClientLoad()"
@@ -259,7 +266,7 @@
 
 // Global variables
 var urlArray = [];
-var dropboxUrlTest = "";
+var dropboxUrl = "";
 
 // FIREBASE STORAGE
 // Your web app's Firebase configuration
@@ -275,10 +282,13 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-function selectImg(event, imgDomId, wrapperId) {
+function selectImg(imgDomId, wrapperId) {
   var wrapper = document.getElementById(wrapperId);
   var preview = document.getElementById(imgDomId);//selects the query named img
   var file    = wrapper.querySelector('input[type=file]').files[0];
+  var name    = wrapperId;
+  var namePng = name + ".png";
+  alert(name);
 
   var reader  = new FileReader();
   reader.onload = function (e) {
@@ -300,18 +310,20 @@ function selectImg(event, imgDomId, wrapperId) {
           return false;
       }
       alert("Uploaded image has valid Height and Width.");
-      uploadToCloud(file, "appicon.png");
+      uploadToCloud(file, namePng);
       preview.src = reader.result;
 
       // Push url to array
       var storage = firebase.storage();
-      var pathReference = storage.ref('images/' + 'appicon.png');
+      var pathReference = storage.ref('images/' + namePng);
       
       pathReference.getDownloadURL().then(function(url) {
-        urlArray.push(url);
-        dropboxUrlTest = url;
-        setDBUrl(dropboxUrlTest);
-        console.log(urlArray[0]);
+        urlArray.push(
+          {'url': url, 'filename': namePng}
+        );
+        //dropboxUrl = url;
+        //setDBUrl(dropboxUrl);
+        //console.log(urlArray[0]);
         
       }).catch(function(error) {
         switch (error.code) {
@@ -384,6 +396,11 @@ function validateImgFile(fileId){
     }else{
       return true;
     }
+}
+
+function createName(str) {
+  newStr = str.replace(/-/g, "");
+  return newStr;
 }
 
 // Temporary func: set the URL for dropbox button (image to save)
