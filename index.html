@@ -105,12 +105,12 @@
                 <input type="file">
               </div>
               <div class="file-path-wrapper">
-                <input class="file-path validate" id="LDPI-img" type="text" placeholder="" onchange="selectImg('LDPI-img', 'LDPI')">
+                <input class="file-path validate" type="text" placeholder="" onchange="selectImg('LDPI-img', 'LDPI')">
               </div>
             </div>
         </div>
         <div class="col s2">
-          <img src="Blank_Page-512.png" class="thumbnail" alt="Image preview...">
+          <img src="Blank_Page-512.png" id="LDPI-img" class="thumbnail" alt="Image preview...">
         </div>
       </div>
 
@@ -242,31 +242,32 @@
         </div>
       </div>
 
-        <p>Dropbox</p>
-        <a href="https://dl.dropboxusercontent.com/s/deroi5nwm6u7gdf/advice.png" class="dropbox-saver" id="dropbox-saver-id">Dropbox</a>
-
-        <!--Add buttons to initiate auth sequence and sign out-->
-        <!-- <h5>Google Drive</h5>
-        <button id="authorize_button" class="btn">Authorize</button>
-        <button id="signout_button" class="btn">Sign Out</button>
-        <pre id="content" style="white-space: pre-wrap;"></pre> -->
-      <div id="dropbox-btn"></div>
+      <!--Add buttons to initiate auth sequence and sign out-->
+      <!-- <h5>Google Drive</h5>
+      <button id="authorize_button" class="btn">Authorize</button>
+      <button id="signout_button" class="btn">Sign Out</button>
+      <pre id="content" style="white-space: pre-wrap;"></pre> -->
   </form>
+
+  <button class="btn waves-effect waves-light" onclick="createDropboxBtn()">Submit
+  </button>
+  <br><br>
+  <div id="dropbox-btn"></div>
+  <br><br>
+
   </div>
 
 <!-- <script type="text/javascript" src="drive.js"></script> -->
 <script type="text/javascript" src="dropbox.js"></script>
-<script async defer src="https://apis.google.com/js/api.js"
+<!-- <script async defer src="https://apis.google.com/js/api.js"
   onload="this.onload=function(){};handleClientLoad()"
   onreadystatechange="if (this.readyState === 'complete') this.onload()">
-</script>
+</script> -->
 <script>
 // Author: Leonid Uvarov
 // NOTES: Create function for validateDimensions, separate firebase .js file?
 
 // Global variables
-var urlArray = [];
-var dropboxUrl = "";
 
 // FIREBASE STORAGE
 // Your web app's Firebase configuration
@@ -288,11 +289,10 @@ function selectImg(imgDomId, wrapperId) {
   var file    = wrapper.querySelector('input[type=file]').files[0];
   var name    = wrapperId;
   var namePng = name + ".png";
-  alert(name);
 
   var reader  = new FileReader();
   reader.onload = function (e) {
-
+ 
     //file = document.querySelector('input[type=file]').files[0]; //sames as here
 
     //Initiate the JavaScript Image object.
@@ -302,14 +302,16 @@ function selectImg(imgDomId, wrapperId) {
 
     //Validate the File Height and Width.
     image.onload = function () {
+
+      // validateImgSize(this.width, this.height, width, height, size, this.size);
       var height = this.height;
       var width = this.width;
       if (height > 500 || width > 500) {
-          alert("Height and Width must not exceed 100px.");
+          console.log("Height and Width must not exceed 100px.");
           
           return false;
       }
-      alert("Uploaded image has valid Height and Width.");
+      console.log("Uploaded image has valid Height and Width.");
       uploadToCloud(file, namePng);
       preview.src = reader.result;
 
@@ -318,9 +320,10 @@ function selectImg(imgDomId, wrapperId) {
       var pathReference = storage.ref('images/' + namePng);
       
       pathReference.getDownloadURL().then(function(url) {
-        urlArray.push(
+        options.files.push(
           {'url': url, 'filename': namePng}
         );
+        console.log(options.files[0]);
         //dropboxUrl = url;
         //setDBUrl(dropboxUrl);
         //console.log(urlArray[0]);
@@ -380,8 +383,18 @@ function uploadToCloud(image, name){
 }
 
 // Pass the function aparameters to check against, return false if fails
-function validateImgSize() {
+function validateImgSize(width, height, valWidth, valHeight, size, valSize) {
+  if (width > valWidth || width > valWidth) {
+    console.log("Height and Width must not exceed 100px."); 
+    return false;
+  }
 
+  if (size > valSize) {
+    console.log("File size is too large."); 
+    return false;
+  }
+
+  return true;
 }
 
 // Function to validate file type
