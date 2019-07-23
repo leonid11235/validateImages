@@ -189,20 +189,20 @@
       <h5>4. Google play metadata</h5>
       <div class="row">
         <div class="input-field col s12">
-          <textarea id="textarea2" class="materialize-textarea" data-length="120"></textarea>
-          <label for="textarea2">App name</label>
+          <textarea id="textarea1" class="materialize-textarea" data-length="120"></textarea>
+          <label for="textarea1">App name</label>
         </div>
         <div class="input-field col s12">
           <textarea id="textarea2" class="materialize-textarea" data-length="120"></textarea>
           <label for="textarea2">Account for screenshots (normally support provides)</label>
         </div>
         <div class="input-field col s12">
-            <textarea id="textarea2" class="materialize-textarea" data-length="120"></textarea>
-            <label for="textarea2">App Description For Google Play</label>
+            <textarea id="textarea3" class="materialize-textarea" data-length="120"></textarea>
+            <label for="textarea3">App Description For Google Play</label>
         </div>
         <div class="input-field col s12">
-            <textarea id="textarea2" class="materialize-textarea" data-length="120"></textarea>
-            <label for="textarea2">Short Description for Google Play</label>
+            <textarea id="textarea4" class="materialize-textarea" data-length="120"></textarea>
+            <label for="textarea4">Short Description for Google Play</label>
         </div>
       </div>
 
@@ -307,10 +307,13 @@ function selectImg(imgDomId, wrapperId) {
       var height = this.height;
       var width = this.width;
       if (height > 500 || width > 500) {
-          console.log("Height and Width must not exceed 100px.");
+          alert("Height and Width must not exceed 500px.");
           
           return false;
+      } else {
+
       }
+
       console.log("Uploaded image has valid Height and Width.");
       uploadToCloud(file, namePng);
       preview.src = reader.result;
@@ -395,6 +398,22 @@ function validateImgSize(width, height, valWidth, valHeight, size, valSize) {
   }
 
   return true;
+}
+
+// Update UI on validation
+// Pass a 0 or 1 state, 
+function updateUIVal(state, selector) {
+  var $el = $('#' + selector);
+  if (state) {
+    // Show success prompt
+    $el.html("Success!");
+    $el.addClass("imgSuccess");
+    $el.removeClass("imgFail");
+  } 
+    // Show failed prompt
+    $el.html("Failed: Check requirements above");
+    $el.addClass("imgFail");
+    $el.removeClass("imgSuccess");
 }
 
 // Function to validate file type
