@@ -249,7 +249,7 @@
       <pre id="content" style="white-space: pre-wrap;"></pre> -->
   </form>
 
-  <button class="btn waves-effect waves-light" onclick="createDropboxBtn()">Submit
+  <button class="btn waves-effect waves-light" onclick="submitBtn()">Submit
   </button>
   <br><br>
   <div id="dropbox-btn"></div>
@@ -283,6 +283,11 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+// Array to store local file url's
+localFiles =  [
+
+];
+
 function selectImg(imgDomId, wrapperId) {
   var wrapper = document.getElementById(wrapperId);
   var preview = document.getElementById(imgDomId);//selects the query named img
@@ -315,40 +320,13 @@ function selectImg(imgDomId, wrapperId) {
       }
 
       console.log("Uploaded image has valid Height and Width.");
-      uploadToCloud(file, namePng);
+
+      localFiles.push(
+        {"url": file, "name": namePng}
+      );
+
+      // uploadToCloud(file, namePng);
       preview.src = reader.result;
-
-      // Push url to array
-      var storage = firebase.storage();
-      var pathReference = storage.ref('images/' + namePng);
-      
-      pathReference.getDownloadURL().then(function(url) {
-        options.files.push(
-          {'url': url, 'filename': namePng}
-        );
-        console.log(options.files[0]);
-        //dropboxUrl = url;
-        //setDBUrl(dropboxUrl);
-        //console.log(urlArray[0]);
-        
-      }).catch(function(error) {
-        switch (error.code) {
-        case 'storage/object-not-found':
-          // File doesn't exist
-          break;
-
-        case 'storage/unauthorized':
-          // User doesn't have permission to access the object
-          break;
-
-        case 'storage/canceled':
-          // User canceled the upload
-          break;
-        case 'storage/unknown':
-          // Unknown error occurred, inspect the server response
-        break;
-        }
-      });
 
       return true;
     };
@@ -383,6 +361,40 @@ function uploadToCloud(image, name){
 
     }
   )
+}
+
+function uploadToCloudLoop() {
+  // Push url to array
+  // var storage = firebase.storage();
+  // var pathReference = storage.ref('images/' + namePng);
+
+  for (var i = 0; i < localFiles.length; i++) {
+    uploadToCloud(localFiles[i].file, localFiles[i].namePng);
+  }
+  
+  // Get the URL from firebase (for dropbox function)
+  // pathReference.getDownloadURL().then(function(url) {
+
+  //   console.log(options.files[0]);
+    
+  // }).catch(function(error) {
+  //   switch (error.code) {
+  //   case 'storage/object-not-found':
+  //     // File doesn't exist
+  //     break;
+
+  //   case 'storage/unauthorized':
+  //     // User doesn't have permission to access the object
+  //     break;
+
+  //   case 'storage/canceled':
+  //     // User canceled the upload
+  //     break;
+  //   case 'storage/unknown':
+  //     // Unknown error occurred, inspect the server response
+  //   break;
+  //   }
+  // });
 }
 
 // Pass the function aparameters to check against, return false if fails
@@ -438,6 +450,15 @@ function createName(str) {
 // Temporary func: set the URL for dropbox button (image to save)
 function setDBUrl(url) {
   $('#dropbox-saver-id').attr('href', url);
+}
+
+/**
+   * Creates a string that can be used for dynamic id attributes
+   * Example: "id-so7567s1pcpojemi"
+   * @returns {string}
+  */
+function uniqueNumber() {
+  return 'id-' + Math.random().toString(36).substr(2, 16);
 }
 
 </script>

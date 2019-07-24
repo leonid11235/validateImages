@@ -28,7 +28,11 @@ var options = {
 };
 
 // Creates a dropbox button 
-function createDropboxBtn() {  
+function submitBtncreateDropboxBtn() { 
+  
+  // Upload array of local URL's to Firebase
+
   var button = Dropbox.createSaveButton(options);
   document.getElementById("dropbox-btn").appendChild(button);
 }
+
