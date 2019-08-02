@@ -27,10 +27,10 @@ var options = {
   error: function (errorMessage) {}
 };
 
-// Creates a dropbox button 
-function submitBtncreateDropboxBtn() { 
-  
-  // Upload array of local URL's to Firebase
+function createDropBoxBtn() {
+  // Get the URL from firebase (for dropbox function)
+
+
 
   var button = Dropbox.createSaveButton(options);
   document.getElementById("dropbox-btn").appendChild(button);

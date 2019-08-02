@@ -19,6 +19,8 @@
   src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
   integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
   crossorigin="anonymous"></script>
+  <!-- Fontawesome -->
+  <script src="https://kit.fontawesome.com/5e353a2baf.js"></script>
   <style>
     .thumbnail {
       width: 50px;
@@ -50,7 +52,7 @@
               <input type="file">
             </div>
             <div class="file-path-wrapper">
-              <input class="file-path validate" id="app-icon" name="appicon" type="text" onchange="selectImg('app-icon-img', 'appicon')">
+              <input class="file-path validate" id="app-icon" name="appicon" type="text" onchange="selectImg('app-icon-img', 'appicon', 500, 500)">
             </div>
           </div>
         </div>
@@ -69,7 +71,7 @@
                 <input type="file">
               </div>
               <div class="file-path-wrapper">
-                <input class="file-path validate" type="text" placeholder="" onchange="selectImg('portrait-img', 'portrait')">
+                <input class="file-path validate" type="text" placeholder="" onchange="selectImg('portrait-img', 'portrait', 500, 500)">
               </div>
             </div>
         </div>
@@ -87,7 +89,7 @@
                 <input type="file">
               </div>
               <div class="file-path-wrapper">
-                <input class="file-path validate" type="text" placeholder="" onchange="selectImg('MDPI-img', 'MDPI')">
+                <input class="file-path validate" type="text" placeholder="" onchange="selectImg('MDPI-img', 'MDPI', 500, 500)">
               </div>
             </div>
         </div>
@@ -105,7 +107,7 @@
                 <input type="file">
               </div>
               <div class="file-path-wrapper">
-                <input class="file-path validate" type="text" placeholder="" onchange="selectImg('LDPI-img', 'LDPI')">
+                <input class="file-path validate" type="text" placeholder="" onchange="selectImg('LDPI-img', 'LDPI', 500, 500)">
               </div>
             </div>
         </div>
@@ -193,7 +195,7 @@
           <label for="textarea1">App name</label>
         </div>
         <div class="input-field col s12">
-          <textarea id="textarea2" class="materialize-textarea" data-length="120"></textarea>
+          <textarea id="textarea2" class="materialize-textarea overflown" data-length="120"></textarea>
           <label for="textarea2">Account for screenshots (normally support provides)</label>
         </div>
         <div class="input-field col s12">
@@ -249,7 +251,7 @@
       <pre id="content" style="white-space: pre-wrap;"></pre> -->
   </form>
 
-  <button class="btn waves-effect waves-light" onclick="submitBtn()">Submit
+  <button class="btn waves-effect waves-light" onclick="submitBtn()">Submit <i class="far fa-share-square"></i>
   </button>
   <br><br>
   <div id="dropbox-btn"></div>
@@ -288,7 +290,7 @@ localFiles =  [
 
 ];
 
-function selectImg(imgDomId, wrapperId) {
+function selectImg(imgDomId, wrapperId, valHeight, valWidth) {
   var wrapper = document.getElementById(wrapperId);
   var preview = document.getElementById(imgDomId);//selects the query named img
   var file    = wrapper.querySelector('input[type=file]').files[0];
@@ -297,8 +299,6 @@ function selectImg(imgDomId, wrapperId) {
 
   var reader  = new FileReader();
   reader.onload = function (e) {
- 
-    //file = document.querySelector('input[type=file]').files[0]; //sames as here
 
     //Initiate the JavaScript Image object.
     var image = new Image();
@@ -311,22 +311,14 @@ function selectImg(imgDomId, wrapperId) {
       // validateImgSize(this.width, this.height, width, height, size, this.size);
       var height = this.height;
       var width = this.width;
-      if (height > 500 || width > 500) {
-          alert("Height and Width must not exceed 500px.");
-          
+      if (height > valHeight || width > valWidth) {
+        alert("Height and Width must not exceed " + valHeight +"px.");    
           return false;
       } else {
-
+        console.log("Uploaded image has valid Height and Width.");
+        localFiles.push({"url": file, "name": namePng});
+        preview.src = reader.result;
       }
-
-      console.log("Uploaded image has valid Height and Width.");
-
-      localFiles.push(
-        {"url": file, "name": namePng}
-      );
-
-      // uploadToCloud(file, namePng);
-      preview.src = reader.result;
 
       return true;
     };
@@ -339,65 +331,65 @@ function selectImg(imgDomId, wrapperId) {
   }
 }
 
-function selectImgMulti() {
-
+// Creates a dropbox button 
+function submitBtn() { 
+  
+  // Upload array of local URL's to Firebase
+  uploadToFirebaseLoop();
+  alert("Submited");
+  // createDropBoxBtn();
 }
 
-function uploadToCloud(image, name){
+function uploadToFirebase(image, name){
   // Create a storage reference
   var storageRef = firebase.storage().ref('images/' + name);
   // Upload file - 
   var task = storageRef.put(image);
 
   task.on('state_changed', 
-    function progress(snapshot) {
-
-    },
-    function error(err) {
-
-    },
-
-    function complete() {
-
-    }
+    function progress(snapshot) {console.log("successfully uploaded image to Firebase")},
+    function error(err) {},
+    function complete() {}
   )
 }
 
-function uploadToCloudLoop() {
-  // Push url to array
-  // var storage = firebase.storage();
-  // var pathReference = storage.ref('images/' + namePng);
+// Upload all files in array to Google Firebase Storage
+function uploadToFirebaseLoop() {
 
   for (var i = 0; i < localFiles.length; i++) {
-    uploadToCloud(localFiles[i].file, localFiles[i].namePng);
+    console.log("file: " + localFiles[i].url);
+    uploadToFirebase(localFiles[i].url, localFiles[i].name);
   }
-  
-  // Get the URL from firebase (for dropbox function)
-  // pathReference.getDownloadURL().then(function(url) {
-
-  //   console.log(options.files[0]);
-    
-  // }).catch(function(error) {
-  //   switch (error.code) {
-  //   case 'storage/object-not-found':
-  //     // File doesn't exist
-  //     break;
-
-  //   case 'storage/unauthorized':
-  //     // User doesn't have permission to access the object
-  //     break;
-
-  //   case 'storage/canceled':
-  //     // User canceled the upload
-  //     break;
-  //   case 'storage/unknown':
-  //     // Unknown error occurred, inspect the server response
-  //   break;
-  //   }
-  // });
 }
 
-// Pass the function aparameters to check against, return false if fails
+function getFirebaseImgUrl(name) {
+  var storageRef = firebase.storage().ref('images/' + name)
+  storageRef.getDownloadURL().then(function(url) {
+    
+  }).catch(function(error) {
+    switch (error.code) {
+    case 'storage/object-not-found':
+      // File doesn't exist
+      console.log("File doesn't exist")
+      break;
+    case 'storage/unauthorized':
+      // User doesn't have permission to access the object
+      console.log("User doesn't have permission to access the object")
+      break;
+    case 'storage/canceled':
+      // User canceled the upload
+      console.log("User canceled the upload")
+      break;
+    case 'storage/unknown':
+      // Unknown error occurred, inspect the server response
+      console.log("Unknown error occurred, inspect the server response");
+    break;
+    }
+  });
+}
+
+// Pass the function parameters to check against, return false if fails
+// Note: should be text on page, not alert
 function validateImgSize(width, height, valWidth, valHeight, size, valSize) {
   if (width > valWidth || width > valWidth) {
     console.log("Height and Width must not exceed 100px."); 
@@ -412,9 +404,11 @@ function validateImgSize(width, height, valWidth, valHeight, size, valSize) {
   return true;
 }
 
+
+
 // Update UI on validation
 // Pass a 0 or 1 state, 
-function updateUIVal(state, selector) {
+function updateUIVal(state, selector, errorMsg, succMsg) {
   var $el = $('#' + selector);
   if (state) {
     // Show success prompt
@@ -437,9 +431,33 @@ function validateImgFile(fileId){
         alert('Please upload file having extensions .jpeg/.jpg/.png/.gif only.');
         fileInput.value = '';
         return false;
-    }else{
+    } else {
       return true;
     }
+}
+
+Document.onload = function() {
+  // Adjust height for overflown labels on mobile
+  if ($('.overflown')[0].scrollWidth >  $('.overflown').innerWidth()) {
+    $('.overflown')[0].attr('height', 'auto')
+  }
+}
+
+
+
+/*********************************
+ * 
+ *  UTILS
+ * 
+ * *******************************
+
+/**
+   * Creates a string that can be used for dynamic id attributes
+   * Example: "id-so7567s1pcpojemi"
+   * @returns {string}
+*/
+function uniqueNumber() {
+  return 'id-' + Math.random().toString(36).substr(2, 16);
 }
 
 function createName(str) {
@@ -450,15 +468,6 @@ function createName(str) {
 // Temporary func: set the URL for dropbox button (image to save)
 function setDBUrl(url) {
   $('#dropbox-saver-id').attr('href', url);
-}
-
-/**
-   * Creates a string that can be used for dynamic id attributes
-   * Example: "id-so7567s1pcpojemi"
-   * @returns {string}
-  */
-function uniqueNumber() {
-  return 'id-' + Math.random().toString(36).substr(2, 16);
 }
 
 </script>
