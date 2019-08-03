@@ -362,6 +362,10 @@ function uploadToFirebaseLoop() {
   }
 }
 
+function loadDropboxURLs() {
+  for (var i = 0; i < localFiles.length; i++ )
+}
+
 function getFirebaseImgUrl(name) {
   var storageRef = firebase.storage().ref('images/' + name)
   storageRef.getDownloadURL().then(function(url) {
