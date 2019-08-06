@@ -29,8 +29,7 @@ var options = {
 
 function createDropBoxBtn() {
   // Get the URL from firebase (for dropbox function)
-
-
+  loadDropboxURLs();
 
   var button = Dropbox.createSaveButton(options);
   document.getElementById("dropbox-btn").appendChild(button);

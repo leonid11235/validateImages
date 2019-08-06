@@ -337,7 +337,7 @@ function submitBtn() {
   // Upload array of local URL's to Firebase
   uploadToFirebaseLoop();
   alert("Submited");
-  // createDropBoxBtn();
+  createDropBoxBtn();
 }
 
 function uploadToFirebase(image, name){
@@ -363,31 +363,41 @@ function uploadToFirebaseLoop() {
 }
 
 function loadDropboxURLs() {
-  for (var i = 0; i < localFiles.length; i++ )
+  for (var i = 0; i < localFiles.length; i++ ) {
+    alert(localFiles[0].name);
+    alert(getFirebaseImgUrl(localFiles[0].name));
+    options.files[i].url = getFirebaseImgUrl(localFiles[i].name);
+    options.files[i].name =  localFiles[i].name;
+  }
 }
 
 function getFirebaseImgUrl(name) {
-  var storageRef = firebase.storage().ref('images/' + name)
+  var storageRef = firebase.storage().ref('images/' + name);
   storageRef.getDownloadURL().then(function(url) {
-    
+    alert("firebase: " + url);
+    return url;
   }).catch(function(error) {
     switch (error.code) {
     case 'storage/object-not-found':
       // File doesn't exist
       console.log("File doesn't exist")
+      return false;
       break;
     case 'storage/unauthorized':
       // User doesn't have permission to access the object
       console.log("User doesn't have permission to access the object")
+      return false;
       break;
     case 'storage/canceled':
       // User canceled the upload
       console.log("User canceled the upload")
+      return false;
       break;
     case 'storage/unknown':
       // Unknown error occurred, inspect the server response
       console.log("Unknown error occurred, inspect the server response");
-    break;
+      return false;
+      break;
     }
   });
 }
