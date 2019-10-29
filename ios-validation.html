@@ -1,0 +1,492 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Custom App Image Validator</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <!-- Jquery -->
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+  integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+  crossorigin="anonymous"></script>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-auth.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <!-- Dropbox api -->
+  <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="tlvf8xcd30wdyaf"></script>
+  <!-- Fontawesome -->
+  <script src="https://kit.fontawesome.com/5e353a2baf.js"></script>
+  <style>
+    body{ display: none;}
+    .thumbnail {
+      height: 60px;
+      margin-left: 10px;
+    }
+    .row .col {
+      margin: 0;
+      padding: 0;
+    }
+    #bl-logo {
+      width: 130px;
+      margin-top: 40px;
+    }
+    .invalid-image-underline {
+      border-bottom: 1px solid #f44336 !important;
+      -webkit-box-shadow: 0 1px 0 0 #f44336 !important;
+      box-shadow: 0 1px 0 0 #f44336 !important;
+      color: #f44336 !important;
+    }
+    .text-error { color: #f44336 !important; }
+    .img-val-error { display: none; }
+    .text-success { color: #4CAF50 !important; }
+    .img-val-success { display: none; }
+
+    /* Navigation */
+    nav ul li a{ color: #414141;}  
+    nav .nav-wrapper .sidenav-trigger { color: #414141;}
+    #bl-logo { width: 130px; margin-top: 15px;}
+    #btnLogin { display: none;}
+  </style>
+</head>
+
+<body>
+  <nav class="white">
+      <div class="nav-wrapper container white">
+          <a href="https://www.buildinglink.com/marketing/public/main" target="_blank"><img id="bl-logo" src="logo-bl-small.png" alt="BuildingLink Logo"></a>
+          <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
+          <ul class="right hide-on-med-and-down">
+            <li><a href="/landing-page.html">Home</a></li>
+            <li><a href="/index.html">Android</a></li>
+            <li><a href="/ios-validation.html">IOS</a></li>
+            <li><button class="btn-logout waves-effect waves-light btn red darken-1">Logout</button></li>
+            <li><button name='btn_login' class='col s12 btn btn-large waves-effect indigo' id="btnLogin">Login</button></li>
+          </ul>
+      </div>
+  </nav>
+  
+  <ul class="sidenav" id="mobile-demo">
+      <li><a href="/landing-page.html">Home</a></li>
+      <li><a href="/index.html">Android</a></li>
+      <li><a href="/ios-validation.html">IOS</a></li>
+      <li><a href="/login.html">Logout</a></li>
+  </ul>
+
+  <div class="container">
+    <h3>Custom App Media Validator - <span class="grey-text text-darken-1">IOS</span></h3>
+    <form>
+        <div class="row">
+          <div class="input-field col s10">
+              <textarea id="blg-name-area" class="materialize-textarea" data-length="120"></textarea>
+              <label for="blg-name-area">Building Name</label>
+          </div>
+        </div>
+      <h5>1. App Icon</h5>
+      <ul>
+        <li>Format: PNG</li> 
+        <li>Color space: sRGB or P3</li>
+        <li>Layers: Flattened with no transparency</li>
+        <li>Resolution: 1024x1024 px</li>
+        <li>Shape: Square with no rounded corners</li>
+        <li>Visit <a href="https://developer.android.com/guide/practices/ui_guidelines/icon_design_adaptive" target="_blank">https://developer.android.com/guide/practices/ui_guidelines/icon_design_adaptive</a>  for more information or an SVG icon.</li> 
+      </ul>
+      <div class="row">
+        <div class="col s10">       
+          <div class="file-field input-field" id="app-icon-ios">
+            <div class="btn">
+              <span>Select File</span>
+              <input type="file">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" id="app-icon-ios-input" name="appicon" type="text" onchange="selectImg('app-icon-ios-img', 'app-icon-ios', 1024, 1024)">
+            </div>
+            <p class="img-val-error text-error"><i class="fas fa-times"></i> Please check Image formatting above and select another image</p>
+            <p class="img-val-success text-success"><i class="fas fa-check"></i> Correct image formatting</p>
+          </div>
+        </div>
+        <div class="col s2">
+          <img src="" id="app-icon-ios-img" class="thumbnail" alt="">
+        </div>
+      </div>
+
+      <h5>2. Launch screen If a custom Launch screen is needed, please provide PNGs of the following resolution:</h5>
+      <p>Visit <a href="https://developer.apple.com/design/human-interface-guidelines/ios/icons-andimages/launch-screen/" target="_blank">https://developer.apple.com/design/human-interface-guidelines/ios/icons-andimages/launch-screen/</a>  for more information.</p> 
+      <br>
+      <p>Phone XS Max 1242px × 2688px</p>
+      <div class="row">
+        <div class="col s10">
+          <div class="file-field input-field" id="XS1">
+              <div class="btn">
+                <span>Select File</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" id="XS1-input" type="text" placeholder="" onchange="selectImg('XS1-img', 'XS1', 1242, 2688)">
+              </div>
+              <p class="img-val-error text-error"><i class="fas fa-times"></i> Please check Image formatting above and select another image</p>
+              <p class="img-val-success text-success"><i class="fas fa-check"></i> Correct image formatting</p>
+            </div>
+        </div>
+        <div class="col s2">
+          <img src="" id="XS1-img" class="thumbnail" alt="">
+        </div>
+      </div>
+
+      <p>Phone XS 1125px × 2436px</p>
+      <div class="row">
+        <div class="col s10">
+          <div class="file-field input-field" id="XS2">
+              <div class="btn">
+                <span>Select File</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" id="XS2-input" type="text" placeholder="" onchange="selectImg('XS2-img', 'XS2', 1125, 2436)">
+              </div>
+              <p class="img-val-error text-error"><i class="fas fa-times"></i> Please check Image formatting above and select another image</p>
+              <p class="img-val-success text-success"><i class="fas fa-check"></i> Correct image formatting</p>
+            </div>
+        </div>
+        <div class="col s2">
+          <img src="" id="XS2-img" class="thumbnail" alt="">
+        </div>
+      </div>
+
+      <p>iPhone XR 828px × 1792px</p>
+      <div class="row">
+        <div class="col s10">
+          <div class="file-field input-field" id="XR">
+              <div class="btn">
+                <span>Select File</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" id="XR-input" type="text" placeholder="" onchange="selectImg('XR-img', 'XR', 828, 1792)">
+              </div>
+              <p class="img-val-error text-error"><i class="fas fa-times"></i> Please check Image formatting above and select another image</p>
+              <p class="img-val-success text-success"><i class="fas fa-check"></i> Correct image formatting</p>
+            </div>
+        </div>
+        <div class="col s2">
+          <img src="" id="XR-img" class="thumbnail" alt="">
+        </div>
+      </div>
+
+      <p>Phone 8 Plus 1242px × 2208px</p>
+      <div class="row">
+        <div class="col s10">
+          <div class="file-field input-field" id="plus1">
+              <div class="btn">
+                <span>Select File</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input id="plus1-input" class="file-path validate" type="text" placeholder="" onchange="selectImg('plus1-img', 'plus1', 1242, 2208)">
+              </div>
+              <p class="img-val-error text-error"><i class="fas fa-times"></i> Please check Image formatting above and select another image</p>
+              <p class="img-val-success text-success"><i class="fas fa-check"></i> Correct image formatting</p>
+            </div>
+        </div>
+        <div class="col s2">
+          <img src="" id="plus1-img" class="thumbnail" alt="">
+        </div>
+      </div>
+
+      <p>iPhone 8 750px × 1334px</p>
+      <div class="row">
+        <div class="col s10">
+          <div class="file-field input-field" id="iphone8">
+              <div class="btn">
+                <span>Select File</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input id="iphone8-input" class="file-path validate" type="text" placeholder="" onchange="selectImg('iphone8-img', 'iphone8', 750, 1334)">
+              </div>
+              <p class="img-val-error text-error"><i class="fas fa-times"></i> Please check Image formatting above and select another image</p>
+              <p class="img-val-success text-success"><i class="fas fa-check"></i> Correct image formatting</p>
+            </div>
+        </div>
+        <div class="col s2">
+          <img src="" id="iphone8-img" class="thumbnail" alt="">
+        </div>
+      </div>
+
+      <p>Phone 7 Plus 1242px × 2208px</p>
+      <div class="row">
+        <div class="col s10">
+          <div class="file-field input-field" id="plus2">
+              <div class="btn">
+                <span>Select File</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input id="plus2-input" class="file-path validate" type="text" placeholder="" onchange="selectImg('plus2-img', 'plus2', 1242, 2208)">
+              </div>
+              <p class="img-val-error text-error"><i class="fas fa-times"></i> Please check Image formatting above and select another image</p>
+              <p class="img-val-success text-success"><i class="fas fa-check"></i> Correct image formatting</p>
+            </div>
+        </div>
+        <div class="col s2">
+          <img src="" id="plus2-img" class="thumbnail" alt="">
+        </div>
+      </div>
+      
+      <p>iPhone SE 640px × 1136px</p>
+      <div class="row">
+        <div class="col s10">
+          <div class="file-field input-field" id="SE">
+              <div class="btn">
+                <span>Select File</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input id="SE-input" class="file-path validate" type="text" placeholder="" onchange="selectImg('SE-img', 'SE', 640, 1136)">
+              </div>
+              <p class="img-val-error text-error"><i class="fas fa-times"></i> Please check Image formatting above and select another image</p>
+              <p class="img-val-success text-success"><i class="fas fa-check"></i> Correct image formatting</p>
+            </div>
+        </div>
+        <div class="col s2">
+          <img src="" id="SE-img" class="thumbnail" alt="">
+        </div>
+      </div>
+      
+      <p>12.9" iPad Pro 2048px × 2732px</p>
+      <div class="row">
+        <div class="col s10">
+          <div class="file-field input-field" id="Pro1">
+              <div class="btn">
+                <span>Select File</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input id="Pro1-input" class="file-path validate" type="text" placeholder="" onchange="selectImg('Pro1-img', 'Pro1', 2048, 2732)">
+              </div>
+              <p class="img-val-error text-error"><i class="fas fa-times"></i> Please check Image formatting above and select another image</p>
+              <p class="img-val-success text-success"><i class="fas fa-check"></i> Correct image formatting</p>
+            </div>
+        </div>
+        <div class="col s2">
+          <img src="" id="Pro1-img" class="thumbnail" alt="">
+        </div>
+      </div>
+
+      <p>12.9" iPad Pro 2732px × 2048px</p>
+      <div class="row">
+        <div class="col s10">
+          <div class="file-field input-field" id="Pro2">
+              <div class="btn">
+                <span>Select File</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input id="Pro2-input" class="file-path validate" type="text" placeholder="" onchange="selectImg('Pro2-img', 'Pro2', 2732, 2048)">
+              </div>
+              <p class="img-val-error text-error"><i class="fas fa-times"></i> Please check Image formatting above and select another image</p>
+              <p class="img-val-success text-success"><i class="fas fa-check"></i> Correct image formatting</p>
+            </div>
+        </div>
+        <div class="col s2">
+          <img src="" id="Pro2-img" class="thumbnail" alt="">
+        </div>
+      </div>
+
+      <p>11" iPad Pro 1668px × 2388px</p>
+      <div class="row">
+        <div class="col s10">
+          <div class="file-field input-field" id="Pro3">
+              <div class="btn">
+                <span>Select File</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input id="Pro2-input" class="file-path validate" type="text" placeholder="" onchange="selectImg('Pro3-img', 'Pro3', 1668, 2388)">
+              </div>
+              <p class="img-val-error text-error"><i class="fas fa-times"></i> Please check Image formatting above and select another image</p>
+              <p class="img-val-success text-success"><i class="fas fa-check"></i> Correct image formatting</p>
+            </div>
+        </div>
+        <div class="col s2">
+          <img src="" id="Pro3-img" class="thumbnail" alt="">
+        </div>
+      </div>
+
+      <p>11" iPad Pro 2388px × 1668px</p>
+      <div class="row">
+        <div class="col s10">
+          <div class="file-field input-field" id="Pro4">
+              <div class="btn">
+                <span>Select File</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input id="Pro4-input" class="file-path validate" type="text" placeholder="" onchange="selectImg('Pro4-img', 'Pro4', 2388, 1668)">
+              </div>
+              <p class="img-val-error text-error"><i class="fas fa-times"></i> Please check Image formatting above and select another image</p>
+              <p class="img-val-success text-success"><i class="fas fa-check"></i> Correct image formatting</p>
+            </div>
+        </div>
+        <div class="col s2">
+          <img src="" id="Pro4-img" class="thumbnail" alt="">
+        </div>
+      </div>
+
+      <p>10.5" iPad Pro 1668px × 2224px</p>
+      <div class="row">
+        <div class="col s10">
+          <div class="file-field input-field" id="Pro5">
+              <div class="btn">
+                <span>Select File</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input id="Pro5-input" class="file-path validate" type="text" placeholder="" onchange="selectImg('Pro5-img', 'Pro5', 1668, 2224)">
+              </div>
+              <p class="img-val-error text-error"><i class="fas fa-times"></i> Please check Image formatting above and select another image</p>
+              <p class="img-val-success text-success"><i class="fas fa-check"></i> Correct image formatting</p>
+            </div>
+        </div>
+        <div class="col s2">
+          <img src="" id="Pro5-img" class="thumbnail" alt="">
+        </div>
+      </div>
+
+      <p>10.5" iPad Pro 2224px × 1668px</p>
+      <div class="row">
+        <div class="col s10">
+          <div class="file-field input-field" id="Pro6">
+              <div class="btn">
+                <span>Select File</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input id="Pro6-input" class="file-path validate" type="text" placeholder="" onchange="selectImg('Pro6-img', 'Pro6', 2224, 1668)">
+              </div>
+              <p class="img-val-error text-error"><i class="fas fa-times"></i> Please check Image formatting above and select another image</p>
+              <p class="img-val-success text-success"><i class="fas fa-check"></i> Correct image formatting</p>
+            </div>
+        </div>
+        <div class="col s2">
+          <img src="" id="Pro6-img" class="thumbnail" alt="">
+        </div>
+      </div>
+
+      <p>9.7" iPad 1536px × 2048px</p>
+      <div class="row">
+        <div class="col s10">
+          <div class="file-field input-field" id="Pro7">
+              <div class="btn">
+                <span>Select File</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input id="Pro7-input" class="file-path validate" type="text" placeholder="" onchange="selectImg('Pro7-img', 'Pro7', 1536, 2048)">
+              </div>
+              <p class="img-val-error text-error"><i class="fas fa-times"></i> Please check Image formatting above and select another image</p>
+              <p class="img-val-success text-success"><i class="fas fa-check"></i> Correct image formatting</p>
+            </div>
+        </div>
+        <div class="col s2">
+          <img src="" id="Pro7-img" class="thumbnail" alt="">
+        </div>
+      </div>
+
+      <p>9.7" iPad 2048px × 1536px</p>
+      <div class="row">
+        <div class="col s10">
+          <div class="file-field input-field" id="Pro8">
+              <div class="btn">
+                <span>Select File</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input id="Pro8-input" class="file-path validate" type="text" placeholder="" onchange="selectImg('Pro8-img', 'Pro8', 2048, 1536)">
+              </div>
+              <p class="img-val-error text-error"><i class="fas fa-times"></i> Please check Image formatting above and select another image</p>
+              <p class="img-val-success text-success"><i class="fas fa-check"></i> Correct image formatting</p>
+            </div>
+        </div>
+        <div class="col s2">
+          <img src="" id="Pro8-img" class="thumbnail" alt="">
+        </div>
+      </div>
+
+      <!-- Double check Login screen dimensions -->
+      <h5>3. Login screen top logo 16x9 PNG image, the minimal width is 2048px</h5>  
+      <div class="row">
+        <div class="col s10">
+          <div class="file-field input-field" id="loginScreen">
+              <div class="btn">
+                <span>Select File</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input id="loginScreen-input" class="file-path validate" type="text" placeholder="" onchange="selectImg('loginScreen-img', 'loginScreen', 500, 500)">
+              </div>
+            </div>
+        </div>
+        <div class="col s2">
+          <img src="" id="loginScreen-img" class="thumbnail" alt="">
+        </div>
+      </div>
+
+      <h5>4. Google play metadata</h5>
+      <div class="row">
+        <div class="input-field col s10">
+          <textarea id="textarea1" class="materialize-textarea" data-length="30"></textarea>
+          <label for="textarea1">App name (can't be longer than 30 characters)</label>
+        </div>
+        <div class="input-field col s10">
+          <textarea id="textarea2" class="materialize-textarea overflown" data-length="120"></textarea>
+          <label for="textarea2">Account for screenshots (normally support provides)</label>
+        </div>
+        <div class="input-field col s10">
+            <textarea id="textarea3" class="materialize-textarea" data-length="120"></textarea>
+            <label for="textarea3">App description for the App Store (can't be longer than 4000 characters</label>
+        </div>
+        <div class="input-field col s10">
+            <textarea id="textarea4" class="materialize-textarea" data-length="120"></textarea>
+            <label for="textarea4">Subtitle – a short summary of the app (optional, can't be longer than 30 characters)</label>
+        </div>
+      </div>
+
+      <!--Add buttons to initiate auth sequence and sign out-->
+      <!-- <h5>Google Drive</h5>
+      <button id="authorize_button" class="btn">Authorize</button>
+      <button id="signout_button" class="btn">Sign Out</button>
+      <pre id="content" style="white-space: pre-wrap;"></pre> -->
+      <p>Once the form is complete, click "Submit" </p>
+      <p>If submission succeeds, a "Dropbox" button will appear where you can send your files.</p>
+      <button type="button" class="green btn waves-effect waves-light" onclick="submitBtn()">Submit <i class="far fa-share-square"></i>
+      </button>
+    </form>
+
+  <br><br>
+  <div id="dropbox-btn"></div>
+  <br><br>
+
+</div>
+
+<script type="text/javascript" src="/firebaseConfig.js"></script>
+<script type="text/javascript" src="/auth.js"></script>
+<script type="text/javascript" src="dropbox.js"></script>
+<script type="text/javascript" src="clientImage.js"></script>
+<script type="text/javascript" src="main.js"></script>
+<script>
+    $(document).ready(function(){
+        $('.sidenav').sidenav();
+        checkCredentials();
+    });
+</script>
+<!-- <script async defer src="https://apis.google.com/js/api.js"
+  onload="this.onload=function(){};handleClientLoad()"
+  onreadystatechange="if (this.readyState === 'complete') this.onload()">
+</script> -->
+</body>
+</html>

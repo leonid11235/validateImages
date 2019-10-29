@@ -1,0 +1,58 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Custom App Image Validator</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-storage.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <!-- Dropbox api -->
+  <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="tlvf8xcd30wdyaf"></script>
+  <!-- Jquery -->
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+  integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+  crossorigin="anonymous"></script>
+  <!-- Fontawesome -->
+  <script src="https://kit.fontawesome.com/5e353a2baf.js"></script>
+  <style>
+
+  </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="cont-img-valid" id="cont-img-valid-id">
+
+        </div>
+    </div>
+<script>
+    // Data
+    const person = {
+        name: 'Wes',
+        job: 'Web Developer',
+        city: 'Hamilton',
+        bio: 'Wes is a really cool guy that loves to teach web development!'
+    }
+
+    // And then create our markup:
+    const markup = `
+    <div class="person">
+        <h2>
+            ${person.name}
+        </h2>
+        <p class="location">${person.location}</p>
+        <p class="bio">${person.bio}</p>
+    </div>
+    `;
+
+    // document.getElementById("cont-img-valid-id").innerHTML = markup;
+</script>
+</body>
+</html>
