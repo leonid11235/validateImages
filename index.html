@@ -52,6 +52,7 @@
     nav .nav-wrapper .sidenav-trigger { color: #414141;}
     #bl-logo { width: 130px; margin-top: 15px;}
     #btnLogin { display: none;}
+    .logout-li {padding: 0 0 0 32px;}
   </style>
 </head>
 
@@ -74,7 +75,7 @@
       <li><a href="/landing-page.html">Home</a></li>
       <li><a href="/index.html">Android</a></li>
       <li><a href="/ios-validation.html">IOS</a></li>
-      <li><a href="/login.html">Logout</a></li>
+      <li class="logout-li"><button class="btn-logout waves-effect waves-light btn red darken-1">Logout</button></li>
   </ul>
   <div class="container">
     <h3>Custom App Media Validator - <span class="grey-text text-darken-1">Android</span></h3>
@@ -276,7 +277,7 @@
       <pre id="content" style="white-space: pre-wrap;"></pre> -->
       <p>Once the form is complete, click "Submit" </p>
       <p>If submission succeeds, a "Dropbox" button will appear where you can send your files.</p>
-      <button type="button" class="green btn waves-effect waves-light" onclick="submitBtn()">Submit <i class="far fa-share-square"></i>
+      <button type="button" class="green btn waves-effect waves-light" onclick="submitBtn()">Submit Files <i class="far fa-share-square"></i>
       </button>
     </form>
 
@@ -291,10 +292,10 @@
 <script type="text/javascript" src="clientImage.js"></script>
 <script type="text/javascript" src="main.js"></script>
 <script>
-    $(document).ready(function(){
-        $('.sidenav').sidenav();
-    });
-    checkCredentials();
+  $(document).ready(function(){
+      $('.sidenav').sidenav();
+  });
+  checkCredentials();
 </script>
 <!-- <script async defer src="https://apis.google.com/js/api.js"
   onload="this.onload=function(){};handleClientLoad()"

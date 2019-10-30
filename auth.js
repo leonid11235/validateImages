@@ -5,7 +5,7 @@ const txtPassword = document.getElementById('txtPassword');
 const btnLogin = document.getElementById('btnLogin');
 const $btnLogOut = $('.btn-logout');
 
-// Add login event
+// Login event
 btnLogin.addEventListener('click', e => {
     console.log('login attempted');
     const email = txtEmail.value;
@@ -57,7 +57,6 @@ function errorToScreen(message, selectorID) {
 function checkCredentials() {
     firebase.auth().onAuthStateChanged(firebaseUser => {
         if(firebaseUser) {
-            // Show the page
             $('body').show();
         } else {
             console.log("not logged in");

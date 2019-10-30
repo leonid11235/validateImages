@@ -11,6 +11,7 @@ function selectImg(imgDomId, wrapperId, valHeight, valWidth) {
     var namePng = name + ".png";
     var fileInputId = wrapperId + "-input";
     var reader  = new FileReader();
+    var removeIndex = 0;
     
     reader.onload = function (e) {
   
@@ -27,6 +28,8 @@ function selectImg(imgDomId, wrapperId, valHeight, valWidth) {
         var width = this.width;
         if (height > valHeight || width > valWidth) {
             // If image does not pass dimension validation
+            removeIndex = localFiles.map(function(item) { return item.name; }).indexOf(namePng);
+            localFiles.splice(removeIndex, 1);
             $('#' + fileInputId).addClass("invalid-image-underline");
             preview.src = reader.result;
             errorText.style.display = "block";
@@ -51,6 +54,7 @@ function selectImg(imgDomId, wrapperId, valHeight, valWidth) {
     }
 
     file ? reader.readAsDataURL(file) : preview.src = "";
+    console.log(localFiles);
 }
 
 // Pass the function parameters to check against, return false if fails
