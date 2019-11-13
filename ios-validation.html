@@ -24,6 +24,7 @@
   <script src="https://kit.fontawesome.com/5e353a2baf.js"></script>
   <style>
     body{ display: none;}
+    .title { margin-bottom: 50px;}
     .thumbnail {
       height: 60px;
       margin-left: 10px;
@@ -46,6 +47,7 @@
     .img-val-error { display: none; }
     .text-success { color: #4CAF50 !important; }
     .img-val-success { display: none; }
+    .form { margin-bottom: 40px;}
 
     /* Navigation */
     nav ul li a{ color: #414141;}  
@@ -53,40 +55,40 @@
     #bl-logo { width: 130px; margin-top: 15px;}
     #btnLogin { display: none;}
     .logout-li {padding: 0 0 0 32px;}
+
+    .error-msg { display: none; color: white; padding: 5px; border-radius: 5px;}
   </style>
 </head>
 
 <body>
+  <noscript>Javascript is needed to view this content. Please enable it in your browser's settings</noscript>
   <nav class="white">
       <div class="nav-wrapper container white">
-          <a href="https://www.buildinglink.com/marketing/public/main" target="_blank"><img id="bl-logo" src="logo-bl-small.png" alt="BuildingLink Logo"></a>
-          <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
-          <ul class="right hide-on-med-and-down">
-            <li><a href="/landing-page.html">Home</a></li>
-            <li><a href="/index.html">Android</a></li>
-            <li><a href="/ios-validation.html">IOS</a></li>
-            <li><button class="btn-logout waves-effect waves-light btn red darken-1">Logout</button></li>
-            <li><button name='btn_login' class='col s12 btn btn-large waves-effect indigo' id="btnLogin">Login</button></li>
-          </ul>
+        <a href="https://www.buildinglink.com/marketing/public/main" target="_blank"><img id="bl-logo" src="logo-bl-small.png" alt="BuildingLink Logo"></a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/android-validation.html">Android</a></li>
+          <li><a href="/ios-validation.html">IOS</a></li>
+          <li><button class="btn-logout waves-effect waves-light btn red darken-1">Logout</button></li>
+          <li><button name='btn_login' class='col s12 btn btn-small waves-effect indigo' id="btnLogin">Login</button></li>
+        </ul>
       </div>
-  </nav>
-  
-  <ul class="sidenav" id="mobile-demo">
-      <li><a href="/landing-page.html">Home</a></li>
-      <li><a href="/index.html">Android</a></li>
+    </nav>
+    
+    <ul class="sidenav" id="mobile-demo">
+      <li><a href="/index.html">Home</a></li>
+      <li><a href="/android-validation.html">Android</a></li>
       <li><a href="/ios-validation.html">IOS</a></li>
       <li class="logout-li"><button class="btn-logout waves-effect waves-light btn red darken-1">Logout</button></li>
-  </ul>
+    </ul>
 
   <div class="container">
-    <h3>Custom App Media Validator - <span class="grey-text text-darken-1">IOS</span></h3>
-    <form>
-        <div class="row">
-          <div class="input-field col s10">
-              <textarea id="blg-name-area" class="materialize-textarea" data-length="120"></textarea>
-              <label for="blg-name-area">Building Name</label>
-          </div>
-        </div>
+    <div class="title">
+      <h3>Custom App Media Validator - <span class="grey-text text-darken-1">IOS</span></h3>
+      <h5>Building Name: <span id="blg-name"></span></h5>
+    </div>
+    <form class="form">
       <h5>1. App Icon</h5>
       <ul>
         <li>Format: PNG</li> 
@@ -437,26 +439,6 @@
         </div>
       </div>
 
-      <h5>4. Google play metadata</h5>
-      <div class="row">
-        <div class="input-field col s10">
-          <textarea id="textarea1" class="materialize-textarea" data-length="30"></textarea>
-          <label for="textarea1">App name (can't be longer than 30 characters)</label>
-        </div>
-        <div class="input-field col s10">
-          <textarea id="textarea2" class="materialize-textarea overflown" data-length="120"></textarea>
-          <label for="textarea2">Account for screenshots (normally support provides)</label>
-        </div>
-        <div class="input-field col s10">
-            <textarea id="textarea3" class="materialize-textarea" data-length="120"></textarea>
-            <label for="textarea3">App description for the App Store (can't be longer than 4000 characters</label>
-        </div>
-        <div class="input-field col s10">
-            <textarea id="textarea4" class="materialize-textarea" data-length="120"></textarea>
-            <label for="textarea4">Subtitle – a short summary of the app (optional, can't be longer than 30 characters)</label>
-        </div>
-      </div>
-
       <!--Add buttons to initiate auth sequence and sign out-->
       <!-- <h5>Google Drive</h5>
       <button id="authorize_button" class="btn">Authorize</button>
@@ -466,23 +448,45 @@
       <p>If submission succeeds, a "Dropbox" button will appear where you can send your files.</p>
       <button type="button" class="green btn waves-effect waves-light" onclick="submitBtn()">Submit Files <i class="far fa-share-square"></i>
       </button>
+      <p id="img-not-slt-error" class="error-msg red darken-2">dddddd</p>
     </form>
+  </div>
+  
+  <!-- Dropbox modal -->
+  <div id="modal1" class="modal modal-dropbox">
+    <div class="modal-content">
+      <h5>Final Step!</h5>
+      <p>Store files on your Dropbox account:</p>
+      <div id="dropbox-btn"></div> 
+      <p>Store files in BuildingLink's Dropbox account:</p>
+      <button type="button">Save to BuildingLink</button>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
 
-  <br><br>
-  <div id="dropbox-btn"></div>
-  <br><br>
-
-</div>
+  <!-- Building name modal -->
+  <div id="modal-blg" class="modal modal-blg">
+    <div class="modal-content">
+      <p>Please enter a building name before proceeding</p>
+      <textarea id="blg-name-area" class="materialize-textarea" data-length="120" maxlength="50" required></textarea>
+      <label for="blg-name-area">Building Name</label>
+    </div>
+    <span id="modal-blg-name-error" class="error-msg red darken-2" style="margin-left: 24px;"></span>
+    <div class="modal-footer">
+      <button class="waves-effect waves-green btn-flat" onclick="saveBlgName()">Save</button>
+    </div>
+  </div>
 
 <script type="text/javascript" src="/firebaseConfig.js"></script>
 <script type="text/javascript" src="/auth.js"></script>
-<script type="text/javascript" src="dropbox.js"></script>
-<script type="text/javascript" src="clientImage.js"></script>
-<script type="text/javascript" src="main.js"></script>
+<script type="text/javascript" src="/dropbox.js"></script>
+<script type="text/javascript" src="/clientImage.js"></script>
+<script type="text/javascript" src="/main.js"></script>
 <script>
   $(document).ready(function(){
-      $('.sidenav').sidenav();
-      checkCredentials();
+
   });
 </script>
 <!-- <script async defer src="https://apis.google.com/js/api.js"

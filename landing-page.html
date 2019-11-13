@@ -60,26 +60,27 @@
 </head>
 
 <body>
-    <nav class="white">
-        <div class="nav-wrapper container white">
-          <a href="https://www.buildinglink.com/marketing/public/main" target="_blank"><img id="bl-logo" src="logo-bl-small.png" alt="BuildingLink Logo"></a>
-          <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
-          <ul class="right hide-on-med-and-down">
-            <li><a href="/landing-page.html">Home</a></li>
-            <li><a href="/index.html">Android</a></li>
-            <li><a href="/ios-validation.html">IOS</a></li>
-            <li><button class="btn-logout waves-effect waves-light btn red darken-1">Logout</button></li>
-            <li><button name='btn_login' class='col s12 btn btn-small waves-effect indigo' id="btnLogin">Login</button></li>
-          </ul>
-        </div>
-    </nav>
+  <noscript>Javascript is needed to view this content. Please enable it in your browser's settings</noscript>
+  <nav class="white">
+    <div class="nav-wrapper container white">
+      <a href="https://www.buildinglink.com/marketing/public/main" target="_blank"><img id="bl-logo" src="logo-bl-small.png" alt="BuildingLink Logo"></a>
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/android-validation.html">Android</a></li>
+        <li><a href="/ios-validation.html">IOS</a></li>
+        <li><button class="btn-logout waves-effect waves-light btn red darken-1">Logout</button></li>
+        <li><button name='btn_login' class='col s12 btn btn-small waves-effect indigo' id="btnLogin">Login</button></li>
+      </ul>
+    </div>
+  </nav>
   
-    <ul class="sidenav" id="mobile-demo">
-      <li><a href="/landing-page.html">Home</a></li>
-      <li><a href="/index.html">Android</a></li>
-      <li><a href="/ios-validation.html">IOS</a></li>
-      <li class="logout-li"><button class="btn-logout waves-effect waves-light btn red darken-1">Logout</button></li>
-    </ul>
+  <ul class="sidenav" id="mobile-demo">
+    <li><a href="/index.html">Home</a></li>
+    <li><a href="/android-validation.html">Android</a></li>
+    <li><a href="/ios-validation.html">IOS</a></li>
+    <li class="logout-li"><button class="btn-logout waves-effect waves-light btn red darken-1">Logout</button></li>
+  </ul>
            
   <div class="container">
     <h3>Custom App Media Validator</h3>
@@ -89,10 +90,11 @@
   </div>
   <script src="/firebaseConfig.js"></script>
   <script src="/auth.js"></script>
+  <script src="/main.js"></script>
+
   <script>
     $(document).ready(function(){
-      $('.sidenav').sidenav();
-      checkCredentials();
+
     });
   </script>
 </body>

@@ -51,28 +51,22 @@
         #bl-logo { width: 130px; margin-top: 15px;}
 
         /* Login */
-        #login-error { display: none; color: white; padding: 5px; border-radius: 5px;}
+        .error-msg { display: none; color: white; padding: 5px; border-radius: 5px;}
     </style>
 </head>
 <body>
+    <noscript>Javascript is needed to view this content. Please enable it in your browser's settings</noscript>
     <nav class="white">
         <div class="nav-wrapper container white">
             <a href="https://www.buildinglink.com/marketing/public/main" target="_blank"><img id="bl-logo" src="logo-bl-small.png" alt="BuildingLink Logo"></a>
             <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
             <ul class="right hide-on-med-and-down">
-            <li><a href="/landing-page.html">Home</a></li>
-            <li><a href="/index.html">Android</a></li>
-            <li><a href="/ios-validation.html">IOS</a></li>
-            <li><a href="/login.html" class="btn-logout waves-effect waves-light btn">Login</a></li>
             </ul>
         </div>
     </nav>
     
     <ul class="sidenav" id="mobile-demo">
-        <li><a href="/landing-page.html">Home</a></li>
-        <li><a href="/index.html">Android</a></li>
-        <li><a href="/ios-validation.html">IOS</a></li>
-        <li><a href="/login.html">Login</a></li>
+        <li><a href="https://www.buildinglink.com/marketing/public/main">BuildingLink</a></li>
     </ul>
 
     <div class="container center cont-login">
@@ -109,14 +103,15 @@
                 </div>
             </div>
         </div>
-        <p id="login-error" class="red darken-2">An error occured!</p>
+        <p id="login-error" class="error-msg red darken-2">An error occured!</p>
     </div>
 </body>
 <script type="text/javascript" src="/firebaseConfig.js"></script>
 <script type="text/javascript" src="/auth.js"></script>
+<!-- <script type="text/javascript" src="/main.js"></script> -->
 <script>
     $(document).ready(function(){
-        $('.sidenav').sidenav();
+
     });
 </script>
 </html>

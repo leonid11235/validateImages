@@ -1,4 +1,7 @@
-// This script file handles functions related to images (client side)
+/*********************************
+*  Author: Leonid Uvarov
+*  This JS file handles functions related to images (client side)
+* ******************************/
 // NOTE: This page should be refactor for debugging, readability reasons but works for now.
 
 function selectImg(imgDomId, wrapperId, valHeight, valWidth) {
@@ -15,46 +18,39 @@ function selectImg(imgDomId, wrapperId, valHeight, valWidth) {
     
     reader.onload = function (e) {
   
-        //Initiate the JavaScript Image object.
         var image = new Image();
-        //Set the Base64 string return from FileReader as source.
         image.src = e.target.result;
-
-        //Validate the File Height and Width.
         image.onload = function () {
-  
-        // validateImgDim(this.width, this.height, width, height, size, this.size);
-        var height = this.height;
-        var width = this.width;
-        if (height > valHeight || width > valWidth) {
-            // If image does not pass dimension validation
-            removeIndex = localFiles.map(function(item) { return item.name; }).indexOf(namePng);
-            localFiles.splice(removeIndex, 1);
-            $('#' + fileInputId).addClass("invalid-image-underline");
-            preview.src = reader.result;
-            errorText.style.display = "block";
-            successText.style.display = "none";
 
-            return false;
-        } else {
-            // If image does pass dimension validation
-            console.log("Uploaded image has valid Height and Width.");
-            localFiles.push({"url": file, "name": namePng});
-            preview.src = reader.result;
-            successText.style.display = "block";
-            errorText.style.display = "none";
+            // validateImgDim(this.width, this.height, width, height, size, this.size);
+            var height = this.height;
+            var width = this.width;
+            if (height > valHeight || width > valWidth) {
+                // If image does not pass dimension validation
+                removeIndex = localFiles.map(function(item) { return item.name; }).indexOf(namePng);
+                localFiles.splice(removeIndex, 1);
+                $('#' + fileInputId).addClass("invalid-image-underline");
+                preview.src = reader.result;
+                errorText.style.display = "block";
+                successText.style.display = "none";
 
-            if (document.getElementById(fileInputId).classList.contains("invalid-image-underline")) {
-                document.getElementById(fileInputId).classList.remove("invalid-image-underline");
+                return false;
+            } else {
+                // If image does pass dimension validation
+                console.log("Uploaded image has valid Height and Width.");
+                localFiles.push({"url": file, "name": namePng});
+                preview.src = reader.result;
+                successText.style.display = "block";
+                errorText.style.display = "none";
+
+                if (document.getElementById(fileInputId).classList.contains("invalid-image-underline")) {
+                    document.getElementById(fileInputId).classList.remove("invalid-image-underline");
+                }
             }
-        }
-  
-        return true;
-      };
+            return true;
+        };
     }
-
     file ? reader.readAsDataURL(file) : preview.src = "";
-    console.log(localFiles);
 }
 
 // Pass the function parameters to check against, return false if fails
@@ -89,9 +85,3 @@ function validateImgFile(fileId){
       return true;
     }
 }
-
-// Function calls img validation sub routines
-// function validateImg() {
-//     validateImgFile();
-//     validateImgSize();
-// }

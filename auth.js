@@ -1,4 +1,7 @@
-// File handles Firebase Authentications
+/*********************************
+*  Author: Leonid Uvarov
+*  File handles Firebase Authentications
+* ******************************/
 
 const txtEmail = document.getElementById('txtEmail');
 const txtPassword = document.getElementById('txtPassword');
@@ -20,7 +23,7 @@ btnLogin.addEventListener('click', e => {
             window.location.replace("http://localhost:5500/landing-page.html")
         }
         else {
-            errorToScreen(errorMessage, "login-error");
+            errorToScreenAuth(errorMessage, "login-error");
         }
       });
       auth.onAuthStateChanged(firebaseUser => {
@@ -48,19 +51,43 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
     }
 });
 
-function errorToScreen(message, selectorID) {
-    $('#' + selectorID).html(message)
-    $('#' + selectorID).show();
-}
-
 // If an email and password are not given, redirect to login page
 function checkCredentials() {
     firebase.auth().onAuthStateChanged(firebaseUser => {
         if(firebaseUser) {
-            $('body').show();
+            authShowBody();
+            $('.sidenav').sidenav();
+            $('.modal-dropbox').modal();
+            $('.modal-blg').modal(optionsModal);
+            $('#modal-blg').modal('open'); 
         } else {
             console.log("not logged in");
             window.location.replace("http://localhost:5500/login.html")
         }
     });
 }
+
+// Returns boolean if user has correct credentials
+function isCredentials() {
+    alert("isCredentials function called...");
+    firebase.auth().onAuthStateChanged(firebaseUser => {
+        alert(firebaseUser);
+        return firebaseUser ? true : false;
+    });
+}
+
+// If authentication succeeds, show markup content
+function authShowBody() {
+    $('body').show();
+}
+
+// If authentication fails, redirect to login page
+function authRedirect() {
+    window.location.replace("http://localhost:5500/login.html")
+}
+
+function errorToScreenAuth(message, selectorID) {
+    $('#' + selectorID).html(message)
+    $('#' + selectorID).show();
+}
+  
