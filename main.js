@@ -165,7 +165,7 @@ function submitBtn() {
     }
     $('#modal1').modal('open');  
     console.log(options);
-    createDropBoxBtn();
+    // createDropBoxBtn(); ** Cant use with Dropbox API V2
   } else {
     errorToScreen("Unable to submit, make sure a file is selected", "img-not-slt-error");
   } 

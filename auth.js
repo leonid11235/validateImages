@@ -9,38 +9,54 @@ const btnLogin = document.getElementById('btnLogin');
 const $btnLogOut = $('.btn-logout');
 
 // Login event
-btnLogin.addEventListener('click', e => {
-    console.log('login attempted');
-    const email = txtEmail.value;
-    const pass = txtPassword.value;
-    const auth = firebase.auth();
-    auth.signInWithEmailAndPassword(email, pass).catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        if (!errorMessage) {
-            console.log("Login Successful");
-            window.location.replace("http://localhost:5500/landing-page.html")
-        }
-        else {
-            errorToScreenAuth(errorMessage, "login-error");
-        }
-      });
-      auth.onAuthStateChanged(firebaseUser => {
-        if(firebaseUser) {
-            console.log(firebaseUser);
-            window.location.replace("http://localhost:5500/landing-page.html")
-        } else {
-            console.log("not logged in");
-        }
+
+if (btnLogin) {
+    btnLogin.addEventListener('click', e => {
+        console.log('login attempted');
+        const email = txtEmail.value;
+        const pass = txtPassword.value;
+        const auth = firebase.auth();
+        auth.signInWithEmailAndPassword(email, pass).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            if (!errorMessage) {
+                console.log("Login Successful");
+                window.location.replace("http://localhost:5500/landing-page.html")
+            }
+            else {
+                errorToScreenAuth(errorMessage, "login-error");
+            }
+          });
+          auth.onAuthStateChanged(firebaseUser => {
+            if(firebaseUser) {
+                console.log(firebaseUser);
+                window.location.replace("http://localhost:5500/landing-page.html")
+            } else {
+                console.log("not logged in");
+            }
+        });
     });
-});
+}
 
 // Logout button 
 $btnLogOut.click(function() {
     firebase.auth().signOut();
     window.location.replace("http://localhost:5500/login.html")
 });
+
+// Create a new user
+function createNewUser(email, password, name) {
+    firebase.auth().signInWithEmailAndPassword(email, password, name).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        if(errorMessage)
+            console.log(errorCode + ": " + errorMessage);
+        alert();
+    });
+
+}
 
 // Realtime listener
 firebase.auth().onAuthStateChanged(firebaseUser => {

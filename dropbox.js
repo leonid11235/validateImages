@@ -4,8 +4,7 @@
 * App name is: customAppImagesVal
 * Access token: H0PjyUNiDOAAAAAAAAAANkYqGqzNZk0gVL7cMfsYIUpY_vLbUyCvydu5EsfT8Cb2
 * ******************************/
-var ACCESS_TOKEN = "H0PjyUNiDOAAAAAAAAAANzY6Hao3nZxDZugz96ibd7lLIVIWXavSm9-336kSRhf6";
-var dbx = new Dropbox.Dropbox({ accessToken: ACCESS_TOKEN }); // For leonid@buildinglink.com
+var dbx = new Dropbox_SDK.Dropbox({ accessToken: "H0PjyUNiDOAAAAAAAAAAOz3fL1cJqNncni8zJyflAgktYfFKVahaDACZ5Yw7K9o9" });
 var options = {
   files: [{"url": "https://www.buildinglink.com/Modules/Marketing/Public/images/main/carsonlogo.png", "filename": "carson.png"}],
 
@@ -31,26 +30,61 @@ var options = {
   error: function (errorMessage) {}
 };
 
-// Create a folder 
+// // Create a folder 
 // Takes name - as String value
-function createFolder(name) {
-  dbx.filesCreateFolderV2({path: '/' + name})
+function createBuildingFolder(blgName) {
+  dbx.filesCreateFolderV2({path: '/'+ blgName})
     .then(function(response) {
       console.log(response);
     })
     .catch(function(error) {
-      console.error(error);
+      console.log(error);
+  });
+}
+
+function createSectFolder(blgName, sectName) {
+  dbx.filesCreateFolderV2({path: '/'+ blgName + '/' + sectName})
+  .then(function(response) {
+    console.log(response);
+  })
+  .catch(function(error) {
+    console.log(error);
   });
 }
 
 // Dynamically created dropbox button
 // Button to download files specified from options obj
 function createDropBoxBtn() {
-  var button = Dropbox.createSaveButton(options);
+  var button = Dropbox_v1.createSaveButton(options);
   document.getElementById("dropbox-btn").innerHTML = "";
   document.getElementById("dropbox-btn").appendChild(button);
 }
 
 // Creates folder and file structure in a given Dropbox account
 // Fires when "Send to BuildingLink" button clicked
+function saveToBlkDropbox() {
+  var valid = true;
+  // Create building folder
+  createBuildingFolder(blgName);
+  // Create section folders
+  //createSectFolder(blgName, "Batch-Files");
+  
+  setTimeout(function () {
+      createSectFolder(blgName, "App-Icon");
+  }, 5000);
 
+  setTimeout(function () {
+    createSectFolder(blgName, "Batch-Files");
+  }, 5000);
+
+
+  // createSectFolder(blgName, "Meta-data");
+  // Add images to section folders
+  // Redirect to success page, logout user
+  if (valid)
+    var temp = 1;
+    // window.location.replace("http://localhost:5500/success.html")
+  else
+    alert("An error occured, please refresh the page and try again");
+  // Use sendGrid to send email notification to support
+}

@@ -20,6 +20,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <!-- Dropbox api -->
   <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="tlvf8xcd30wdyaf"></script>
+  <script type="text/javascript">
+    var Dropbox_v1 = Dropbox;
+  </script>
+  <script src="https://unpkg.com/dropbox/dist/Dropbox-sdk.min.js" ></script>
+  <script type="text/javascript">
+      var Dropbox_SDK = Dropbox;
+  </script>
   <!-- Fontawesome -->
   <script src="https://kit.fontawesome.com/5e353a2baf.js"></script>
   <style>
@@ -456,10 +463,10 @@
   <div id="modal1" class="modal modal-dropbox">
     <div class="modal-content">
       <h5>Final Step!</h5>
-      <p>Store files on your Dropbox account:</p>
-      <div id="dropbox-btn"></div> 
+      <!-- <p>Store files on your Dropbox account:</p>
+      <div id="dropbox-btn"></div>  -->
       <p>Store files in BuildingLink's Dropbox account:</p>
-      <button type="button">Save to BuildingLink</button>
+      <button type="button" id="save-blk" onclick="saveToBlkDropbox()">Save to BuildingLink</button>
     </div>
     <div class="modal-footer">
       <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>

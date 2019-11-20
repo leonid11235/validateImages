@@ -60,6 +60,8 @@
   </style>
 </head>
 
+<!-- NOTES: Add this to inputs "accept=".jpg,.png" it will make the experience better -->
+
 <body>
   <noscript>Javascript is needed to view this content. Please enable it in your browser's settings</noscript>
   <nav class="white">
@@ -98,7 +100,7 @@
           <div class="file-field input-field" id="app-icon">
             <div class="btn">
               <span>Select File</span>
-              <input type="file">
+              <input type="file" accept=".jpg,.png">
             </div>
             <div class="file-path-wrapper">
               <input class="file-path validate" id="app-icon-input" name="appicon" type="text" onchange="selectImg('app-icon-img', 'app-icon', 500, 500)">

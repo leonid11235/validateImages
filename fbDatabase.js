@@ -1,0 +1,1 @@
+// Handles Firebase Database functions
