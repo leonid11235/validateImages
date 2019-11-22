@@ -4,7 +4,7 @@
 * App name is: customAppImagesVal
 * Access token: H0PjyUNiDOAAAAAAAAAANkYqGqzNZk0gVL7cMfsYIUpY_vLbUyCvydu5EsfT8Cb2
 * ******************************/
-var dbx = new Dropbox_SDK.Dropbox({ accessToken: "H0PjyUNiDOAAAAAAAAAAOz3fL1cJqNncni8zJyflAgktYfFKVahaDACZ5Yw7K9o9" });
+//var dbx = new Dropbox_SDK.Dropbox({ accessToken: "H0PjyUNiDOAAAAAAAAAAOz3fL1cJqNncni8zJyflAgktYfFKVahaDACZ5Yw7K9o9" });
 var options = {
   files: [{"url": "https://www.buildinglink.com/Modules/Marketing/Public/images/main/carsonlogo.png", "filename": "carson.png"}],
 

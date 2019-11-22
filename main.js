@@ -5,7 +5,7 @@
 
 // Global variables
 const $blgNameDom = $('#blg-name-area');
-var blgName = "";
+var blgName = "Name";
 // Array to store local file url's
 var localFiles =  [];
 var firebaseUrls= [];
@@ -67,7 +67,6 @@ function uploadToFirebase(image, name){
     });
   });
 }
-
 
 // Update UI on validation
 // Pass a 0 or 1 state, 

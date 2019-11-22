@@ -17,6 +17,7 @@
     <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-storage.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-firestore.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <!-- Dropbox api -->
     <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="tlvf8xcd30wdyaf"></script>
@@ -49,31 +50,40 @@
         nav ul li a{ color: #414141;}  
         nav .nav-wrapper .sidenav-trigger { color: #414141;}
         #bl-logo { width: 130px; margin-top: 15px;}
+        .logout-li {padding: 0 0 0 32px;}
 
         /* Login */
         .error-msg { display: none; color: white; padding: 5px; border-radius: 5px;}
+        .fa-check-circle {margin-left: 3px;}
     </style>
 </head>
 <body>
     <noscript>Javascript is needed to view this content. Please enable it in your browser's settings</noscript>
     <nav class="white">
-        <div class="nav-wrapper container white">
-            <a href="https://www.buildinglink.com/marketing/public/main" target="_blank"><img id="bl-logo" src="logo-bl-small.png" alt="BuildingLink Logo"></a>
-            <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
-            <ul class="right hide-on-med-and-down">
-            </ul>
-        </div>
+    <div class="nav-wrapper container white">
+        <a href="https://www.buildinglink.com/marketing/public/main" target="_blank"><img id="bl-logo" src="logo-bl-small.png" alt="BuildingLink Logo"></a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
+        <ul class="right hide-on-med-and-down">
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/android-validation.html">Android</a></li>
+        <li><a href="/ios-validation.html">IOS</a></li>
+        <li><button class="btn-logout waves-effect waves-light btn red darken-1">Logout</button></li>
+        </ul>
+    </div>
     </nav>
     
     <ul class="sidenav" id="mobile-demo">
-        <li><a href="https://www.buildinglink.com/marketing/public/main">BuildingLink</a></li>
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/android-validation.html">Android</a></li>
+        <li><a href="/ios-validation.html">IOS</a></li>
+        <li class="logout-li"><button class="btn-logout waves-effect waves-light btn red darken-1">Logout</button></li>
     </ul>
 
     <div class="container center cont-login2">
         <h3>Sign Up a New User</h3>
         <br>
         <div class="z-depth-1 grey lighten-4 row center" style="width: 767px; display: inline-block; padding: 32px 48px 32px 48px; border: 1px solid #EEE;">
-            <form class="col s6">
+            <form class="col s6" id="form-signup">
                 <div class="row">
                     <div class="input-field col s12">
                         <input placeholder="Building Name" id="blg_name" type="text" class="validate">
@@ -82,14 +92,31 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="password" type="password" class="validate">
+                        <input id="password" type="password" placeholder="password" class="validate">
                         <label for="password">Password</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="email" type="email" class="validate">
+                        <input id="email" type="email" class="validate" placeholder="email@email.com">
                         <label for="email">Email</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12 left-align">
+                        <p>Choose user type</p>
+                        <span>
+                            <label>
+                                <input name="type-radio" type="radio" value="building" checked/>
+                                <span>Building</span>
+                            </label>
+                        </span>
+                        <span>
+                            <label>
+                                <input name="type-radio" type="radio" value="admin"/>
+                                <span>Admin</span>
+                            </label>
+                    </span>
                     </div>
                 </div>
             </form>
@@ -104,33 +131,23 @@
                 <button name='btn_create' class='btn btn-small waves-effect indigo' id="btn-create-user" onclick="createUserBtn()">Create User</button>
             </div>
     
-            <!-- Error messages -->
-            <div class="errors-signup">
-                <p id="signup-error" class="error-msg red darken-2">Duplicate username</p>
-                <p id="signup-error2" class="error-msg red darken-2">Duplicate email</p>
-            </div>
+        </div>
+        <!-- Error messages -->
+        <div class="errors-signup">
+            <p id="error-signup-id" class="error-msg red darken-2"></p>
+            <p id="signup-error" class="error-msg red darken-2">Duplicate username</p>
+            <p id="signup-error2" class="error-msg red darken-2">Duplicate email</p>
         </div>
     </div>
 </body>
 <script type="text/javascript" src="/firebaseConfig.js"></script>
+<script type="text/javascript" src="/fbDatabase.js"></script>
 <script type="text/javascript" src="/auth.js"></script>
 <script type="text/javascript" src="/main.js"></script>
-<!-- <script type="text/javascript" src="/main.js"></script> -->
+<script type="text/javascript" src="/signup.js"></script>
 <script>
     $(document).ready(function(){
-        var name = "";
-        var email = "";
-        var password = "";
-
-        name = $('#blg_name').val();
-        email = $('#email').val();
-        password = $('#password').val();
 
     });
-
-    function createUserBtn() {
-        // Make sure to check for errors first
-        createNewUser(email, password);
-    }
 </script>
 </html>

@@ -3,13 +3,13 @@
 *  File handles Firebase Authentications
 * ******************************/
 
+var curEmail = "";
 const txtEmail = document.getElementById('txtEmail');
 const txtPassword = document.getElementById('txtPassword');
 const btnLogin = document.getElementById('btnLogin');
 const $btnLogOut = $('.btn-logout');
 
 // Login event
-
 if (btnLogin) {
     btnLogin.addEventListener('click', e => {
         console.log('login attempted');
@@ -46,16 +46,16 @@ $btnLogOut.click(function() {
 });
 
 // Create a new user
-function createNewUser(email, password, name) {
-    firebase.auth().signInWithEmailAndPassword(email, password, name).catch(function(error) {
+function createNewUser(email, password, type, name) {
+    firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) {
+        writeUserData(name, email, type); // Optional
+    }, function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
-        if(errorMessage)
-            console.log(errorCode + ": " + errorMessage);
-        alert();
+        console.log(errorCode + ": " + errorMessage);
+        errorToScreenAuth(errorCode + ": " + errorMessage, "error-signup-id");
     });
-
 }
 
 // Realtime listener
@@ -71,11 +71,12 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 function checkCredentials() {
     firebase.auth().onAuthStateChanged(firebaseUser => {
         if(firebaseUser) {
+            // These client side function call calls should not be in checkCredentials() 
             authShowBody();
             $('.sidenav').sidenav();
             $('.modal-dropbox').modal();
-            $('.modal-blg').modal(optionsModal);
-            $('#modal-blg').modal('open'); 
+            //$('.modal-blg').modal(optionsModal);
+            //$('#modal-blg').modal('open'); 
         } else {
             console.log("not logged in");
             window.location.replace("http://localhost:5500/login.html")
@@ -105,5 +106,11 @@ function authRedirect() {
 function errorToScreenAuth(message, selectorID) {
     $('#' + selectorID).html(message)
     $('#' + selectorID).show();
+}
+
+// Authenticate before navigating to another authenticated page
+function authOnNavigate() {
+    // If authenticated, navigate
+    // Else, be taken to ERROR page with button to Login page
 }
   
