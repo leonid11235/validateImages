@@ -2,6 +2,7 @@
 *  Author: Leonid Uvarov
 *  File handles signup functionality
 * ******************************/
+
 var name = "";
 var email = "";
 var password = "";

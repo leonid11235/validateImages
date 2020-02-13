@@ -75,8 +75,6 @@ function checkCredentials() {
             authShowBody();
             $('.sidenav').sidenav();
             $('.modal-dropbox').modal();
-            //$('.modal-blg').modal(optionsModal);
-            //$('#modal-blg').modal('open'); 
         } else {
             console.log("not logged in");
             window.location.replace("http://localhost:5500/login.html")

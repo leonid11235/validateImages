@@ -1,90 +1,73 @@
 /*********************************
 * Author: Leonid Uvarov
-* Create a dropbox saver button with an array of URL's
 * App name is: customAppImagesVal
-* Access token: H0PjyUNiDOAAAAAAAAAANkYqGqzNZk0gVL7cMfsYIUpY_vLbUyCvydu5EsfT8Cb2
 * ******************************/
-//var dbx = new Dropbox_SDK.Dropbox({ accessToken: "H0PjyUNiDOAAAAAAAAAAOz3fL1cJqNncni8zJyflAgktYfFKVahaDACZ5Yw7K9o9" });
-var options = {
-  files: [{"url": "https://www.buildinglink.com/Modules/Marketing/Public/images/main/carsonlogo.png", "filename": "carson.png"}],
+var token = "H0PjyUNiDOAAAAAAAAAAPYFoxSC1-T8eOPzVQ15J0U8dlgegwj6t6NcgQACydZTa"
+var dbx = new Dropbox.Dropbox({ accessToken: token })
 
-  // Success is called once all files have been successfully added to the user's
-  // Dropbox, although they may not have synced to the user's devices yet.
-  success: function () {
-      // Indicate to the user that the files have been saved.
-      console.log("Success! Files saved to your Dropbox.");
-  },
+// Array holds images to 
+var args = []
 
-  // Progress is called periodically to update the application on the progress
-  // of the user's downloads. The value passed to this callback is a float
-  // between 0 and 1. The progress callback is guaranteed to be called at least
-  // once with the value 1.
-  progress: function (progress) {},
-
-  // Cancel is called if the user presses the Cancel button or closes the Saver.
-  cancel: function () {},
-
-  // Error is called in the event of an unexpected response from the server
-  // hosting the files, such as not being able to find a file. This callback is
-  // also called if there is an error on Dropbox or if the user is over quota.
-  error: function (errorMessage) {}
-};
-
-// // Create a folder 
-// Takes name - as String value
-function createBuildingFolder(blgName) {
-  dbx.filesCreateFolderV2({path: '/'+ blgName})
-    .then(function(response) {
-      console.log(response);
-    })
-    .catch(function(error) {
-      console.log(error);
-  });
+// Object holds folder names
+const folderNames = {
+  appIcon: 'App Icon',
+  splashScreen: 'Splash Screen',
+  login: 'Login',
+  metadata: 'Metadata'
 }
 
-function createSectFolder(blgName, sectName) {
-  dbx.filesCreateFolderV2({path: '/'+ blgName + '/' + sectName})
+const data = [
+  {
+    name: '',
+    folder: ''
+  }
+]
+
+// Get user info
+function getUserInfo() {
+  alert();
+  dbx.usersGetCurrentAccount()
   .then(function(response) {
-    console.log(response);
+    console.log(response)
   })
   .catch(function(error) {
-    console.log(error);
-  });
+    console.error(error)
+  })
 }
 
-// Dynamically created dropbox button
-// Button to download files specified from options obj
-function createDropBoxBtn() {
-  var button = Dropbox_v1.createSaveButton(options);
-  document.getElementById("dropbox-btn").innerHTML = "";
-  document.getElementById("dropbox-btn").appendChild(button);
+// Create folder structure
+const createFolders = () => {
+  dbx.filesCreateFolderBatch({
+    paths: [
+      '/' + app.blgName, 
+      '/' + app.blgName + '/' + folderNames.appIcon, 
+      '/' + app.blgName + '/' + folderNames.splashScreen, 
+      '/' + app.blgName + '/' + folderNames.login, 
+      '/' + app.blgName + '/' + folderNames.metadata
+    ]
+  })
+}
+
+// Upload image to specific folder
+const uploadToFolderParam = (pathParam, urlParam) => {
+  dbx.filesSaveUrl({path: pathParam, url: urlParam})
 }
 
 // Creates folder and file structure in a given Dropbox account
 // Fires when "Send to BuildingLink" button clicked
 function saveToBlkDropbox() {
-  var valid = true;
   // Create building folder
-  createBuildingFolder(blgName);
-  // Create section folders
-  //createSectFolder(blgName, "Batch-Files");
-  
-  setTimeout(function () {
-      createSectFolder(blgName, "App-Icon");
-  }, 5000);
+  createFolders()
+  firebaseUrls.forEach(function(obj, index) {
+    const folderName = folderNames.appIcon
+    uploadToFolderParam('/' + app.blgName + '/'+ folderName + '/' + obj.filename, obj.url)
+  })
+}
 
-  setTimeout(function () {
-    createSectFolder(blgName, "Batch-Files");
-  }, 5000);
-
-
-  // createSectFolder(blgName, "Meta-data");
-  // Add images to section folders
-  // Redirect to success page, logout user
-  if (valid)
-    var temp = 1;
-    // window.location.replace("http://localhost:5500/success.html")
-  else
-    alert("An error occured, please refresh the page and try again");
-  // Use sendGrid to send email notification to support
+// Creates a new text file in Dropbox
+// Reference: https://blogs.dropbox.com/developers/2013/12/writing-a-file-with-the-dropbox-javascript-sdk/
+function dropboxTxt() {
+  dbx.writeFile('hello.txt', 'Hello, World!', function () {
+        alert('File written!')
+  });
 }

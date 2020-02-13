@@ -4,28 +4,17 @@
 * ******************************/
 
 // Global variables
-const $blgNameDom = $('#blg-name-area');
-var blgName = "Name";
+
 // Array to store local file url's
 var localFiles =  [];
 var firebaseUrls= [];
-var optionsModal = {
-  "dismissible": false
+var app = {
+  "blgName": "default"
 };
 
 /*********************************
 *  INPUT HANDLING
 ********************************/
-function getBlgNameTxt() {
-  return $blgNameDom.val().replace(/\s/g, '');
-}
-
-function validateInputOnSubm() {
-  if (blgName !== "" && localFiles.length > 0)
-    return true;
-  else
-    return false; 
-}
 
 /*********************************
 *  FIREBASE FUNCTIONS
@@ -33,14 +22,14 @@ function validateInputOnSubm() {
 
 // This funcion does 3 separate things and should be split up
 function uploadToFirebase(image, name){
-  var storageRef = firebase.storage().ref('images/' + blgName + "/"+ name);
+  var storageRef = firebase.storage().ref('images/' + app.blgName + "/"+ name);
   storageRef.put(image).then(function(snapshot){
     storageRef.getDownloadURL().then(function(url) {
-      var obj = {
+      var arg = {
         "url": url,
         "filename": name
       };
-      options.files.push(obj);
+      firebaseUrls.push(arg);
     }).catch(function(error) {
       switch (error.code) {
       case 'storage/object-not-found':
@@ -144,27 +133,14 @@ function init() {
   checkCredentials();
 }
 
-// Fires when user clicks "Save" in modal-blg
-function saveBlgName() {
-  if ($blgNameDom.val().replace(/\s/g, '') !== "") {
-    blgName = $blgNameDom.val().replace(/\s/g, '').trim();
-    $('#modal-blg').modal('close');
-    $('#blg-name').html(blgName);
-  } else {
-    errorToScreen("Please enter a building name", "modal-blg-name-error");
-  }
-}
-
 // When user clicks "Submit files"
 function submitBtn() { 
-  var noError = validateInputOnSubm();
-  if (noError) {
+  var noError = true;
+  if (noError && localFiles.length > 0) {
     for (var i = 0; i < localFiles.length; i++) {
       uploadToFirebase(localFiles[i].url, localFiles[i].name);
     }
     $('#modal1').modal('open');  
-    console.log(options);
-    // createDropBoxBtn(); ** Cant use with Dropbox API V2
   } else {
     errorToScreen("Unable to submit, make sure a file is selected", "img-not-slt-error");
   } 

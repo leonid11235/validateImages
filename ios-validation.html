@@ -10,8 +10,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <!-- Jquery -->
   <script
-  src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-  integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-app.js"></script>
@@ -20,14 +20,7 @@
   <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-firestore.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <!-- Dropbox api -->
-  <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="tlvf8xcd30wdyaf"></script>
-  <script type="text/javascript">
-    var Dropbox_v1 = Dropbox;
-  </script>
   <script src="https://unpkg.com/dropbox/dist/Dropbox-sdk.min.js" ></script>
-  <script type="text/javascript">
-      var Dropbox_SDK = Dropbox;
-  </script>
   <!-- Fontawesome -->
   <script src="https://kit.fontawesome.com/5e353a2baf.js"></script>
   <style>
@@ -464,13 +457,11 @@
   <div id="modal1" class="modal modal-dropbox">
     <div class="modal-content">
       <h5>Final Step!</h5>
-      <!-- <p>Store files on your Dropbox account:</p>
-      <div id="dropbox-btn"></div>  -->
       <p>Store files in BuildingLink's Dropbox account:</p>
-      <button type="button" id="save-blk" onclick="saveToBlkDropbox()">Save to BuildingLink</button>
+      <button type="button" id="save-blk" class="btn waves-effect waves-light" onclick="saveToBlkDropbox()">Save Files to BuildingLink</button>
     </div>
     <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+      <a href="#!" class="modal-close btn waves-effect waves-light">Close</a>
     </div>
   </div>
 

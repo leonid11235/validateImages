@@ -29,17 +29,18 @@ function initClient() {
     clientId: CLIENT_ID,
     discoveryDocs: DISCOVERY_DOCS,
     scope: SCOPES
-  }).then(function () {
-    // Listen for sign-in state changes.
-    gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+  })
+  //.then(function () {
+  //   // Listen for sign-in state changes.
+  //   gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
 
-    // Handle the initial sign-in state.
-    updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-    authorizeButton.onclick = handleAuthClick;
-    signoutButton.onclick = handleSignoutClick;
-  }, function(error) {
-    appendPre(JSON.stringify(error, null, 2));
-  });
+  //   // Handle the initial sign-in state.
+  //   updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+  //   authorizeButton.onclick = handleAuthClick;
+  //   signoutButton.onclick = handleSignoutClick;
+  // }, function(error) {
+  //   appendPre(JSON.stringify(error, null, 2));
+  // });
 }
 
 /**
@@ -101,5 +102,28 @@ function listFiles() {
     } else {
       appendPre('No files found.');
     }
+  });
+}
+
+function createFolder() {
+
+  var access_token = googleAuth.getAccessToken();
+
+  var request = gapi.client.request({
+      'path': '/drive/v2/files/',
+      'method': 'POST',
+      'headers': {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + access_token,             
+      },
+      'body':{
+          "title" : "Folder",
+          "mimeType" : "application/vnd.google-apps.folder",
+      }
+  });
+
+  request.execute(function(resp) { 
+      console.log(resp); 
+      document.getElementById("info").innerHTML = "Created folder: " + resp.title;
   });
 }

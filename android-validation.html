@@ -10,8 +10,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <!-- Jquery -->
   <script
-  src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-  integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-app.js"></script>
@@ -19,8 +19,8 @@
   <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-firestore.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <!-- Dropbox api -->
-  <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="tlvf8xcd30wdyaf"></script>
+<!-- Dropbox api -->
+<script src="https://unpkg.com/dropbox/dist/Dropbox-sdk.min.js" ></script>
   <!-- Fontawesome -->
   <script src="https://kit.fontawesome.com/5e353a2baf.js"></script>
   <style>
@@ -87,7 +87,7 @@
     </ul>
   <div class="container">
     <div class="title">
-        <h3>Custom App Media Validator - <span class="grey-text text-darken-1">IOS</span></h3>
+        <h3>Custom App Media Validator - <span class="grey-text text-darken-1">Android</span></h3>
         <h5>Building Name: <span id="blg-name"></span></h5>
     </div>
     <form class="form">
@@ -254,11 +254,6 @@
         </div>
       </div>
       
-      <!--Add buttons to initiate auth sequence and sign out-->
-      <!-- <h5>Google Drive</h5>
-      <button id="authorize_button" class="btn">Authorize</button>
-      <button id="signout_button" class="btn">Sign Out</button>
-      <pre id="content" style="white-space: pre-wrap;"></pre> -->
       <p>Once the form is complete, click "Submit" </p>
       <p>If submission succeeds, a "Dropbox" button will appear in a pop-up where you can send your files.</p>
       <button type="button" class="green btn waves-effect waves-light" data-target="modal1" onclick="submitBtn()">Submit Files <i class="far fa-share-square"></i>
@@ -270,8 +265,8 @@
 <div id="modal1" class="modal modal-dropbox">
   <div class="modal-content">
     <h5>Final Step!</h5>
-    <p>Store files on your Dropbox account:</p>
-    <div id="dropbox-btn"></div>
+    <p>Store files in BuildingLink's Dropbox account:</p>
+    <button type="button" id="save-blk" class="btn waves-effect waves-light" onclick="saveToBlkDropbox()">Save Files to BuildingLink</button>
   </div>
   <div class="modal-footer">
     <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
@@ -295,6 +290,7 @@
 <script type="text/javascript" src="firebaseConfig.js"></script>
 <script type="text/javascript" src="auth.js"></script>
 <script type="text/javascript" src="fbDatabase.js"></script>
+<script type="text/javascript" src="drive.js"></script>
 <script type="text/javascript" src="dropbox.js"></script>
 <script type="text/javascript" src="clientImage.js"></script>
 <script type="text/javascript" src="main.js"></script>
@@ -305,9 +301,5 @@
 
   });
 </script>
-<!-- <script async defer src="https://apis.google.com/js/api.js"
-  onload="this.onload=function(){};handleClientLoad()"
-  onreadystatechange="if (this.readyState === 'complete') this.onload()">
-</script> -->
 </body>
 </html>

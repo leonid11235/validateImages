@@ -1,4 +1,4 @@
-// Files used by validation form pages
+// File used by validation form pages
 
 formsInit();
 
@@ -14,7 +14,8 @@ function getBlgNamefromFB() {
             db.collection("users").get().then((snapshot) => {
                 snapshot.docs.forEach(doc => {
                     if (doc.data().email === email) {
-                        displayBlgName(doc.data().name);               
+                        displayBlgName(doc.data().name);  
+                        setName(doc.data().name);             
                     }     
                 })
             })
@@ -26,4 +27,8 @@ function getBlgNamefromFB() {
 
 function displayBlgName(name) {
     $('#blg-name').html(name);
+}
+
+function setName(nameFromDb) {
+    app.blgName = nameFromDb;
 }

@@ -4,6 +4,8 @@
 * ******************************/
 // NOTE: This page should be refactor for debugging, readability reasons but works for now.
 
+var filesList = [];
+
 function selectImg(imgDomId, wrapperId, valHeight, valWidth) {
     var wrapper = document.getElementById(wrapperId);
     var preview = document.getElementById(imgDomId);//selects the query named img
@@ -42,6 +44,8 @@ function selectImg(imgDomId, wrapperId, valHeight, valWidth) {
                 preview.src = reader.result;
                 successText.style.display = "block";
                 errorText.style.display = "none";
+                filesList.push(file); // ??
+                console.log(filesList);
 
                 if (document.getElementById(fileInputId).classList.contains("invalid-image-underline")) {
                     document.getElementById(fileInputId).classList.remove("invalid-image-underline");
